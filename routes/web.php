@@ -18,14 +18,7 @@ use Inertia\Inertia;
 
 Route::get('/healthz', fn () => response()->json(['message' => 'ok']));
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', fn ()  => Inertia::render('Index'));
 
 Route::get('/home', function () {
     return Inertia::render('Home');
