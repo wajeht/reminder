@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,12 +19,16 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/healthz', fn () => response()->json(['message' => 'ok']))->name('healthz');
-Route::get('/', fn ()  => Inertia::render('Index'))->name('index');
+Route::get('/', [AppController::class, 'index'])->name('index');
+Route::get('/healthz', [AppController::class, 'healthz'])->name('healthz');
+Route::get('/terms', [AppController::class, 'terms'])->name('terms');
+Route::get('/privacy', [AppController::class, 'privacy'])->name('privacy');
+Route::get('/contact', [AppController::class, 'contact'])->name('contact');
 
-Route::get('/home', function () {
-    return Inertia::render('Home');
-})->middleware(['auth', 'verified'])->name('home');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
