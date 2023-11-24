@@ -24,8 +24,9 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
                 </p>
             </div>
 
-            <div class="flex gap-2 justify-center">
+            <div class="flex justify-center gap-2">
                 <SecondaryButton @click="router.get('about')"> Learn more </SecondaryButton>
+
                 <PrimaryButton @click="router.get('login')"> Get started </PrimaryButton>
             </div>
         </div>
@@ -33,7 +34,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
         <div class="flex items-center justify-center gap-4 p-4">
             <ThemeToggle class="[&_svg]:text-slate-900 [&_svg]:dark:text-slate-400" />
 
-            <span class="text-sm text-slate-900 dark:text-slate-400">
+            <span class="text-xs text-slate-900 dark:text-slate-400">
                 Copyright © 2023. Made with ❤️ by
                 <a
                     class="hover:underline dark:hover:text-white"

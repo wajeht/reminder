@@ -38,10 +38,10 @@ const submit = () => {
         </div>
 
         <form
-            @submit.prevent="submit"
-            class="flex flex-col gap-6">
+            class="flex flex-col gap-6"
+            @submit.prevent="submit">
             <h2
-                class="text-2xl font-semibold leading-tight text-gray-800 dark:text-gray-200 text-center">
+                class="text-center text-2xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                 Login
             </h2>
 
@@ -83,7 +83,7 @@ const submit = () => {
                         :message="form.errors.password" />
                 </div>
 
-                <div class="mt-4 block">
+                <div class="mt-4 flex items-center justify-between">
                     <label class="flex items-center">
                         <Checkbox
                             v-model:checked="form.remember"
@@ -93,22 +93,30 @@ const submit = () => {
                             >Remember me</span
                         >
                     </label>
-                </div>
 
-                <div class="mt-4 flex items-center justify-end">
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
                         class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
                         Forgot your password?
                     </Link>
+                </div>
 
-                    <PrimaryButton
-                        class="ms-4"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing">
-                        Log in
-                    </PrimaryButton>
+                <PrimaryButton
+                    class="mt-6 w-full align-middle"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing">
+                    <span class="w-full">Log in</span>
+                </PrimaryButton>
+
+                <div class="mt-6 flex justify-between">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Don't have an account yet?</span>
+
+                    <Link
+                        :href="route('register')"
+                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
+                        Register
+                    </Link>
                 </div>
             </div>
         </form>

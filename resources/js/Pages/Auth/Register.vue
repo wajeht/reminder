@@ -27,12 +27,13 @@ const submit = () => {
         <Head title="Register" />
 
         <form
-            @submit.prevent="submit"
-            class="flex flex-col gap-6">
+            class="flex flex-col gap-6"
+            @submit.prevent="submit">
             <h2
-                class="text-2xl font-semibold leading-tight text-gray-800 dark:text-gray-200 text-center">
+                class="text-center text-2xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                 Login
             </h2>
+
             <div>
                 <div>
                     <InputLabel
