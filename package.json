@@ -3,21 +3,34 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc && vite build && vite build --ssr"
+        "format": "prettier \"resources/**/*.{js,ts,vue}\" --write",
+        "type-check": "vue-tsc --noEmit",
+        "lint": "eslint \"resources/**/*.{js,ts,vue}\" --fix",
+        "build": "npm run format && npm run lint && npm run type-check && vite build && vite build --ssr"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
         "@tailwindcss/forms": "^0.5.3",
         "@types/ziggy-js": "^1.3.2",
+        "@typescript-eslint/eslint-plugin": "^6.12.0",
+        "@typescript-eslint/parser": "^6.12.0",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vue/server-renderer": "^3.2.31",
         "autoprefixer": "^10.4.12",
         "axios": "^1.6.1",
+        "eslint": "^8.54.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-tailwindcss": "^3.13.0",
+        "eslint-plugin-unused-imports": "^3.0.0",
+        "eslint-plugin-vue": "^9.18.1",
         "laravel-vite-plugin": "^0.8.0",
         "postcss": "^8.4.18",
+        "prettier": "^3.1.0",
+        "prettier-plugin-tailwindcss": "^0.5.7",
         "tailwindcss": "^3.2.1",
         "typescript": "^5.0.2",
         "vite": "^4.0.0",
+        "vite-plugin-eslint": "^1.8.1",
         "vue": "^3.2.41",
         "vue-tsc": "^1.2.0"
     }
