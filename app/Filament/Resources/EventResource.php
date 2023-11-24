@@ -6,6 +6,7 @@ use App\Enums\RecurringType;
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
+use App\Models\User;
 use App\Models\Recurrence;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -54,7 +55,9 @@ class EventResource extends Resource
                         TextInput::make('recurrence_interval')
                             ->label('Interval')
                             ->numeric()
-                            ->visible(fn (callable $get) => $get('type') === 'custom'),
+                            ->visible(fn (callable $get) => $get('recurrence_type') === 'custom'),
+
+                        Select::make('user_id')->options(User::all()->pluck('name', 'id'))->preload()->label('User')
                     ])
             ]);
     }
