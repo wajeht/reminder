@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response as InertiaResponse;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response as InertiaResponse;
 
 class CalendarController extends Controller
 {

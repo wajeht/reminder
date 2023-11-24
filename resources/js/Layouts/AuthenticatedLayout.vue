@@ -22,8 +22,12 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('home')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <h1
+                                        class="text-center text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                                        reminder
+                                    </h1>
+                                    <!-- <ApplicationLogo
+                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> -->
                                 </Link>
                             </div>
 

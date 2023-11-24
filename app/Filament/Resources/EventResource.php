@@ -4,11 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Enums\RecurringType;
 use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
 use App\Models\User;
-use App\Models\Recurrence;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -16,14 +13,12 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class EventResource extends Resource
 {
@@ -57,8 +52,8 @@ class EventResource extends Resource
                             ->numeric()
                             ->visible(fn (callable $get) => $get('recurrence_type') === 'custom'),
 
-                        Select::make('user_id')->options(User::all()->pluck('name', 'id'))->preload()->label('User')
-                    ])
+                        Select::make('user_id')->options(User::all()->pluck('name', 'id'))->preload()->label('User'),
+                    ]),
             ]);
     }
 

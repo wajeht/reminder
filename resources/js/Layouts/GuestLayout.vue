@@ -1,32 +1,17 @@
 <script setup lang="ts">
-import ThemeToggle from '@/Components/ThemeToggle.vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
+import Footer from '@/Components/Footer.vue';
+import Header from '@/Components/Header.vue';
 </script>
 
 <template>
     <div
         class="relative flex min-h-screen flex-col items-center justify-between bg-gray-100 dark:bg-gray-900">
-        <div></div>
+        <Header />
 
-        <div
-            class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md dark:bg-gray-800 sm:max-w-md sm:rounded-lg">
+        <div class="mt-6 flex h-full w-full items-center justify-center overflow-hidden p-5">
             <slot />
         </div>
 
-        <div class="flex items-center justify-center gap-4 p-4">
-            <ThemeToggle class="[&_svg]:text-slate-900 [&_svg]:dark:text-slate-400" />
-
-            <span class="text-xs text-slate-900 dark:text-slate-400">
-                Copyright © 2023. Made with ❤️ by
-                <a
-                    class="hover:underline dark:hover:text-white"
-                    href="https://github.com/wajeht/reminder"
-                    target="_blank"
-                    title="reminder github repo"
-                    >@wajeht ↗️</a
-                >
-            </span>
-        </div>
+        <Footer />
     </div>
 </template>

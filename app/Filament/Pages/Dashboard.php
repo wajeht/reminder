@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
 use Filament\Facades\Filament;
+use Filament\Pages\Page;
 use Filament\Panel;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Widgets\Widget;
@@ -68,12 +68,12 @@ class Dashboard extends Page
     /**
      * @return int | string | array<string, int | string | null>
      */
-    public function getColumns(): int | string | array
+    public function getColumns(): int|string|array
     {
         return 2;
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return static::$title ?? __('filament-panels::pages/dashboard.title');
     }

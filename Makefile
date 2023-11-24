@@ -1,5 +1,6 @@
 lint:
 	npm run lint
+	./vendor/bin/pint
 
 install:
 	composer install

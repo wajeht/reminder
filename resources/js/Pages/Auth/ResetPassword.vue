@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Card from '@/Components/Card.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -29,71 +30,72 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Reset Password" />
+        <Card>
+            <Head title="Reset Password" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel
-                    for="email"
-                    value="Email" />
+            <form @submit.prevent="submit">
+                <div>
+                    <InputLabel
+                        for="email"
+                        value="Email" />
 
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username" />
+                    <TextInput
+                        id="email"
+                        v-model="form.email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="username" />
 
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.email" />
-            </div>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.email" />
+                </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password"
-                    value="Password" />
+                <div class="mt-4">
+                    <InputLabel
+                        for="password"
+                        value="Password" />
 
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password" />
+                    <TextInput
+                        id="password"
+                        v-model="form.password"
+                        type="password"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="new-password" />
 
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password" />
-            </div>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.password" />
+                </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password" />
+                <div class="mt-4">
+                    <InputLabel
+                        for="password_confirmation"
+                        value="Confirm Password" />
 
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password" />
+                    <TextInput
+                        id="password_confirmation"
+                        v-model="form.password_confirmation"
+                        type="password"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="new-password" />
 
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation" />
-            </div>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.password_confirmation" />
+                </div>
 
-            <div class="mt-4 flex items-center justify-end">
                 <PrimaryButton
+                    class="mt-6 flex w-full"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
-                    Reset Password
+                    <span class="w-full"> Reset Password </span>
                 </PrimaryButton>
-            </div>
-        </form>
+            </form>
+        </Card>
     </GuestLayout>
 </template>

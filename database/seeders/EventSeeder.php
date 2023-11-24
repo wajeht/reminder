@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\RecurringType;
 use App\Models\Event;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class EventSeeder extends Seeder
@@ -17,25 +16,25 @@ class EventSeeder extends Seeder
         // Seed daily events
         Event::factory()->count(5)->create([
             'recurrence_type' => RecurringType::Daily->value,
-            'recurrence_interval' => null
+            'recurrence_interval' => null,
         ]);
 
         // Seed weekly events
         Event::factory()->count(5)->create([
             'recurrence_type' => RecurringType::Weekly->value,
-            'recurrence_interval' => null
+            'recurrence_interval' => null,
         ]);
 
         // Seed monthly events
         Event::factory()->count(5)->create([
             'recurrence_type' => RecurringType::Monthly->value,
-            'recurrence_interval' => null
+            'recurrence_interval' => null,
         ]);
 
         // Seed custom recurrence events
         Event::factory()->count(5)->create([
             'recurrence_type' => RecurringType::Custom->value,
-            'recurrence_interval' => 3
+            'recurrence_interval' => 3,
         ]);
     }
 }

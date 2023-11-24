@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Inertia\Response as InertiaResponse;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response as InertiaResponse;
 
 class AppController extends Controller
 {
@@ -14,9 +14,9 @@ class AppController extends Controller
         return Inertia::render('Index');
     }
 
-    public function contact(Request $request): JsonResponse
+    public function contact(Request $request): InertiaResponse
     {
-        return response()->json(['contact' => 'contact']);
+        return Inertia::render('Contact');
     }
 
     public function about(Request $request): InertiaResponse
@@ -24,14 +24,14 @@ class AppController extends Controller
         return Inertia::render('About');
     }
 
-    public function terms(Request $request): JsonResponse
+    public function terms(Request $request): InertiaResponse
     {
-        return response()->json(['message' => 'terms']);
+        return Inertia::render('Terms');
     }
 
-    public function privacy(Request $request): JsonResponse
+    public function privacy(Request $request): InertiaResponse
     {
-        return response()->json(['message' => 'privacy']);
+        return Inertia::render('Privacy');
     }
 
     public function healthz(Request $request): JsonResponse
