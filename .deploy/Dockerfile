@@ -45,7 +45,7 @@ RUN chown -R $NON_ROOT_USER:$NON_ROOT_GROUP $LARAVEL_PATH
 USER $NON_ROOT_USER
 
 # Install Node.js dependencies
-RUN npm install
+RUN npm install -ci
 
 # Install PHP dependencies
 RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader
@@ -102,6 +102,6 @@ ARG PUSHER_APP_CLUSTER=${PUSHER_APP_CLUSTER}
 EXPOSE 80
 COPY ./.deploy/entrypoint.sh /
 
-HEALTHCHECK CMD curl -f http://localhost:80/health-check || exit 1
+# HEALTHCHECK CMD curl -f http://localhost:80/health-check || exit 1
 
 ENTRYPOINT ["sh", "/entrypoint.sh"]

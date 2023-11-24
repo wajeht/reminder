@@ -6,7 +6,9 @@
         "format": "prettier \"resources/**/*.{js,ts,vue}\" --write",
         "type-check": "vue-tsc --noEmit",
         "lint": "eslint \"resources/**/*.{js,ts,vue}\" --fix",
-        "build": "npm run format && npm run lint && npm run type-check && vite build && vite build --ssr"
+        "build": "npm run format && npm run lint && npm run type-check && vite build && vite build --ssr",
+        "build:prod": "vue-tsc && vite build && vite build --ssr",
+        "ssr": "node ./node_modules/pm2/bin/pm2 start ecosystem.config.json"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
@@ -33,5 +35,8 @@
         "vite-plugin-eslint": "^1.8.1",
         "vue": "^3.2.41",
         "vue-tsc": "^1.2.0"
+    },
+    "dependencies": {
+        "pm2": "^5.3.0"
     }
 }
