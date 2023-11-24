@@ -19,11 +19,12 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [AppController::class, 'index'])->name('index');
-Route::get('/healthz', [AppController::class, 'healthz'])->name('healthz');
-Route::get('/terms', [AppController::class, 'terms'])->name('terms');
-Route::get('/privacy', [AppController::class, 'privacy'])->name('privacy');
-Route::get('/contact', [AppController::class, 'contact'])->name('contact');
+Route::get('/', [AppController::class, 'index'])->name('app.index');
+Route::get('/about', [AppController::class, 'about'])->name('app.about');
+Route::get('/terms', [AppController::class, 'terms'])->name('app.terms');
+Route::get('/healthz', [AppController::class, 'healthz'])->name('app.healthz');
+Route::get('/privacy', [AppController::class, 'privacy'])->name('app.privacy');
+Route::get('/contact', [AppController::class, 'contact'])->name('app.contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');

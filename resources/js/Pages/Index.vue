@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import ThemeToggle from '@/Components/ThemeToggle.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 </script>
 
 <template>
@@ -10,15 +12,22 @@ import { Head } from '@inertiajs/vue3';
         class="relative flex min-h-screen flex-col items-center justify-between bg-gray-100 dark:bg-gray-900">
         <div></div>
 
-        <div class="flex flex-col gap-3">
-            <h1
-                class="text-center text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-                reminder
-            </h1>
+        <div class="flex flex-col gap-10">
+            <div class="flex flex-col gap-3">
+                <h1
+                    class="text-center text-8xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
+                    reminder
+                </h1>
 
-            <p class="text-slate-900 dark:text-white">
-                schedule and track automatic countdowns for important events
-            </p>
+                <p class="text-slate-900 dark:text-white">
+                    schedule and track automatic countdowns for important events
+                </p>
+            </div>
+
+            <div class="flex gap-2 justify-center">
+                <SecondaryButton @click="router.get('about')"> Learn more </SecondaryButton>
+                <PrimaryButton @click="router.get('login')"> Get started </PrimaryButton>
+            </div>
         </div>
 
         <div class="flex items-center justify-center gap-4 p-4">

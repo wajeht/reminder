@@ -19,6 +19,11 @@ class AppController extends Controller
         return response()->json(['contact' => 'contact']);
     }
 
+    public function about(Request $request): InertiaResponse
+    {
+        return Inertia::render('About');
+    }
+
     public function terms(Request $request): JsonResponse
     {
         return response()->json(['message' => 'terms']);
