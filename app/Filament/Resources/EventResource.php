@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\RecurringType;
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
@@ -18,6 +19,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class EventResource extends Resource
 {
@@ -37,10 +42,19 @@ class EventResource extends Resource
                         TextInput::make('description')->nullable(),
                         DatePicker::make('start_date')->native(false)->required(),
                         DatePicker::make('end_date')->native(false)->nullable(),
-                        // Select::make('recurrences.id')->options(Recurrence::query()->pluck('name', 'id'))
-                        //     ->searchable()
-                        //     ->preload()
-                        //     ->required(),
+
+                        Select::make('recurrence_type')
+                            ->required()
+                            ->label('Recurrence')
+                            ->options(RecurringType::getAsAssociatedArray())
+                            ->reactive()
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('recurrence_interval', $state === 'custom' ? null : 0))
+                            ->native(false),
+
+                        TextInput::make('recurrence_interval')
+                            ->label('Interval')
+                            ->numeric()
+                            ->visible(fn (callable $get) => $get('type') === 'custom'),
                     ])
             ]);
     }
@@ -58,7 +72,11 @@ class EventResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -80,6 +98,7 @@ class EventResource extends Resource
             'index' => Pages\ListEvents::route('/'),
             'create' => Pages\CreateEvent::route('/create'),
             'edit' => Pages\EditEvent::route('/{record}/edit'),
+            'view' => Pages\ViewEvent::route('/{record}'),
         ];
     }
 }
