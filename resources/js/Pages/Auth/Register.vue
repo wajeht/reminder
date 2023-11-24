@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -10,6 +11,7 @@ const form = useForm({
     name: '',
     email: '',
     password: '',
+    agree: false,
     password_confirmation: '',
 });
 
@@ -31,7 +33,7 @@ const submit = () => {
             @submit.prevent="submit">
             <h2
                 class="text-center text-2xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Login
+                Register
             </h2>
 
             <div>
@@ -108,19 +110,56 @@ const submit = () => {
                         :message="form.errors.password_confirmation" />
                 </div>
 
-                <div class="mt-4 flex items-center justify-end">
+                <div class="mt-4 flex flex-col gap-2">
+                    <label class="flex items-center gap-4">
+                        <div class="flex items-center">
+                            <Checkbox
+                                v-model:checked="form.agree"
+                                name="remember" />
+
+                            <span class="ms-2 text-sm text-gray-600 dark:text-gray-400"
+                                >I agree</span
+                            >
+                        </div>
+
+                        <InputError
+                            class="mt-[3px] [&_p]:text-xs"
+                            :message="form.errors.agree" />
+                    </label>
+
+                    <span class="text-sm text-gray-600 dark:text-gray-400"
+                        >Signing up signifies that you have read and agree to the
+                        <Link
+                            :href="route('app.terms')"
+                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
+                            Terms of Service</Link
+                        >
+                        and our
+                        <Link
+                            :href="route('app.privacy')"
+                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
+                            Privacy Policy </Link
+                        >.</span
+                    >
+                </div>
+
+                <PrimaryButton
+                    class="mt-6 w-full"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing">
+                    <span class="w-full"> Register </span>
+                </PrimaryButton>
+
+                <div class="mt-6 flex justify-between">
+                    <span class="text-sm text-gray-600 dark:text-gray-400"
+                        >Already registered?</span
+                    >
+
                     <Link
                         :href="route('login')"
                         class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
-                        Already registered?
+                        Login
                     </Link>
-
-                    <PrimaryButton
-                        class="ms-4"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing">
-                        Register
-                    </PrimaryButton>
                 </div>
             </div>
         </form>
