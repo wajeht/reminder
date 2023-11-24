@@ -19,9 +19,9 @@ defineProps<{
             class="p-6 text-end sm:fixed sm:right-0 sm:top-0">
             <Link
                 v-if="$page.props.auth.user"
-                :href="route('dashboard')"
+                :href="route('home')"
                 class="font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500 dark:text-gray-400 dark:hover:text-white"
-                >Dashboard</Link
+                >Home</Link
             >
 
             <template v-else>

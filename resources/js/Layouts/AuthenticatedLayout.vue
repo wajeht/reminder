@@ -21,7 +21,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('home')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
@@ -30,10 +30,16 @@ const showingNavigationDropdown = ref(false);
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')">
-                                    Dashboard
+                                    :href="route('home')"
+                                    :active="route().current('home')">
+                                    Home
                                 </NavLink>
+
+                                <a
+                                    class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out'"
+                                    :href="route('filament.admin.pages.dashboard')">
+                                    Admin
+                                </a>
                             </div>
                         </div>
 
@@ -128,9 +134,9 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden">
                     <div class="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')">
-                            Dashboard
+                            :href="route('home')"
+                            :active="route().current('home')">
+                            Home
                         </ResponsiveNavLink>
                     </div>
 
