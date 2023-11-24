@@ -102,6 +102,6 @@ ARG PUSHER_APP_CLUSTER=${PUSHER_APP_CLUSTER}
 EXPOSE 80
 COPY ./.deploy/entrypoint.sh /
 
-# HEALTHCHECK CMD curl -f http://localhost:80/health-check || exit 1
+HEALTHCHECK CMD curl -f http://localhost:80/healthz || exit 1
 
 ENTRYPOINT ["sh", "/entrypoint.sh"]
