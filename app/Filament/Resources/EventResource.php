@@ -50,7 +50,7 @@ class EventResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                TextColumn::make('description')->limit(50),
+                TextColumn::make('description')->limit(50)->toggleable()->toggledHiddenByDefault(),
                 TextColumn::make('start_date')->dateTime(),
                 TextColumn::make('end_date')->dateTime(),
             ])
