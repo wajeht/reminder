@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { Icon } from '@iconify/vue';
 import { useDark, useToggle } from '@vueuse/core';
 
@@ -9,7 +8,7 @@ const toggleDark = useToggle(isDark);
 </script>
 <template>
     <button
-        class="text-sm"
+        class="text-[10px]"
         @click="() => toggleDark()">
         <Icon
             v-if="isDark"
