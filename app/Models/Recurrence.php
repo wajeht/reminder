@@ -10,9 +10,7 @@ class Recurrence extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
-    protected $casts = ['type' => RecurringType::class];
+    protected $guarded = ['id'];
 
     public function events(): HasMany
     {

@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RecurrenceSeeder::class);
         $this->call(EventSeeder::class);
 
-
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'admin@reminder.test',
