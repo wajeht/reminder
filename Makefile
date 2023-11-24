@@ -6,3 +6,6 @@ format:
 
 build:
 	npm run format
+
+refresh-db:
+	php artisan migrate:refresh --seed
