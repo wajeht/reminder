@@ -3,12 +3,14 @@
         "autorestart",
         "healthz",
         "heroicon",
+        "iconify",
         "inertiajs",
         "laravel",
         "tailwindcss",
         "tightenco",
         "toggleable",
         "tokenable",
+        "vueuse",
         "wajeht"
     ],
     "[javascript]": {
