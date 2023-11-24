@@ -16,9 +16,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/healthz', fn () => response()->json(['message' => 'ok']));
-
-Route::get('/', fn ()  => Inertia::render('Index'));
+Route::get('/healthz', fn () => response()->json(['message' => 'ok']))->name('healthz');
+Route::get('/', fn ()  => Inertia::render('Index'))->name('index');
 
 Route::get('/home', function () {
     return Inertia::render('Home');
