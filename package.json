@@ -3,6 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
+        "test": "echo \"not yet\"",
         "format": "prettier \"resources/**/*.{js,ts,vue}\" --write",
         "type-check": "vue-tsc --noEmit",
         "lint": "eslint \"resources/**/*.{js,ts,vue}\" --fix",
