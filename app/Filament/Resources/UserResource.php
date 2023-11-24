@@ -25,7 +25,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
     {
@@ -33,9 +35,9 @@ class UserResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        TextInput::make('name'),
-                        TextInput::make('email')->email(),
-                        TextInput::make('password')->password()
+                        TextInput::make('name')->required(),
+                        TextInput::make('email')->email()->required(),
+                        TextInput::make('password')->password()->required()
                     ])
             ]);
     }
@@ -70,7 +72,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\EventRelationManager::class,
         ];
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\RecurringType;
+use App\Models\User;
 use App\Models\Recurrence;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +20,11 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
-            $table->foreignIdFor(Recurrence::class)->constrained();
+
+            $table->enum('recurrence_type', RecurringType::getValues())->nullable();
+            $table->integer('recurrence_interval')->nullable();
+
+            $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });
     }

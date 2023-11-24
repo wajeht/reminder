@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\RecurringType;
 use App\Models\Event;
-use App\Models\Recurrence;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,28 +14,28 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 5 daily events
-        Recurrence::factory()->count(5)->create(['type' => RecurringType::Daily->value])
-            ->each(function ($recurrence) {
-                Event::factory()->create(['recurrence_id' => $recurrence->id]);
-            });
+        // Seed daily events
+        Event::factory()->count(5)->create([
+            'recurrence_type' => RecurringType::Daily->value,
+            'recurrence_interval' => null
+        ]);
 
-        // Create 5 weekly events
-        Recurrence::factory()->count(5)->create(['type' => RecurringType::Weekly->value])
-            ->each(function ($recurrence) {
-                Event::factory()->create(['recurrence_id' => $recurrence->id]);
-            });
+        // Seed weekly events
+        Event::factory()->count(5)->create([
+            'recurrence_type' => RecurringType::Weekly->value,
+            'recurrence_interval' => null
+        ]);
 
-        // Create 5 monthly events
-        Recurrence::factory()->count(5)->create(['type' => RecurringType::Monthly->value])
-            ->each(function ($recurrence) {
-                Event::factory()->create(['recurrence_id' => $recurrence->id]);
-            });
+        // Seed monthly events
+        Event::factory()->count(5)->create([
+            'recurrence_type' => RecurringType::Monthly->value,
+            'recurrence_interval' => null
+        ]);
 
-        // Create 5 custom events
-        Recurrence::factory()->count(5)->create(['type' => RecurringType::Custom->value])
-            ->each(function ($recurrence) {
-                Event::factory()->create(['recurrence_id' => $recurrence->id]);
-            });
+        // Seed custom recurrence events
+        Event::factory()->count(5)->create([
+            'recurrence_type' => RecurringType::Custom->value,
+            'recurrence_interval' => 3
+        ]);
     }
 }

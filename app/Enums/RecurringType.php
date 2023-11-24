@@ -15,4 +15,11 @@ enum RecurringType: string
   {
     return array_column(self::cases(), 'value');
   }
+
+  public static function getAsAssociatedArray(): array
+  {
+    return collect(self::cases())->mapWithKeys(function ($case) {
+      return [$case->value => $case->value];
+    })->toArray();
+  }
 }

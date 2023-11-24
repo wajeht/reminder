@@ -12,8 +12,8 @@ class Event extends Model
 
     protected $guarded = ['id'];
 
-    public function recurrence(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Recurrence::class);
+        return $this->belongsTo(User::class);
     }
 }
