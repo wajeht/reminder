@@ -10,6 +10,8 @@ class CalendarController extends Controller
 {
     public function index(Request $request): InertiaResponse
     {
-        return Inertia::render('Calendar');
+        return Inertia::render('Calendar', [
+            'events' => request()->user()->load('events')->events,
+        ]);
     }
 }

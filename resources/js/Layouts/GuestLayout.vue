@@ -2,7 +2,6 @@
 import ThemeToggle from '@/Components/ThemeToggle.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
-
 </script>
 
 <template>

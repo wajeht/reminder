@@ -4,9 +4,8 @@ import { Icon } from '@iconify/vue';
 import { useDark, useToggle } from '@vueuse/core';
 
 const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
-onMounted(() => (isDark.value = true));
+const toggleDark = useToggle(isDark);
 </script>
 <template>
     <button
