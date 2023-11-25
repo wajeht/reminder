@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "autorestart",
+        "daygrid",
+        "fullcalendar",
         "healthz",
         "heroicon",
         "iconify",
@@ -8,6 +10,7 @@
         "laravel",
         "tailwindcss",
         "tightenco",
+        "timegrid",
         "toggleable",
         "tokenable",
         "vueuse",

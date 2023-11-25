@@ -18,11 +18,13 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $startDate = $this->faker->dateTimeBetween('first day of this month', 'last day of this month');
+
         return [
             'name' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'start_date' => $this->faker->dateTime(),
-            'end_date' => $this->faker->dateTime(),
+            'start_date' => $startDate,
+            'end_date' => $this->faker->dateTimeBetween($startDate, 'last day of this month'),
             'recurrence_type' => $this->faker->randomElement(RecurringType::getValues()),
             'recurrence_interval' => $this->faker->randomElement([null, 1, 7, 30]),
             'user_id' => User::inRandomOrder()->first()->id,
