@@ -5,6 +5,9 @@ lint:
 pint:
 	./vendor/bin/pint
 
+deploy:
+	./deploy.sh
+
 install:
 	composer install
 	npm install
