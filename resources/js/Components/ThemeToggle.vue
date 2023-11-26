@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { useDark, useToggle } from '@vueuse/core';
+import { useDark, useToggle, useStorage } from '@vueuse/core';
+import { watch } from 'vue';
 
 const isDark = useDark();
+const savedTheme = useStorage('reminder-saved-theme', false);
 
 const toggleDark = useToggle(isDark);
+
+watch(
+    () => isDark.value,
+    () => {
+        savedTheme.value = isDark.value;
+    },
+);
 </script>
 <template>
     <button
