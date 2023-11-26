@@ -6,9 +6,20 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { CalendarOptions } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Head } from '@inertiajs/vue3';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import Dialog from 'primevue/dialog';
+import { OnClickOutside } from '@vueuse/components';
 
-const props = defineProps<{ events: Record<string, unknown>[] }>();
+type Props = { events: Record<string, unknown>[] };
+type States = { modal: { visible: boolean; currentEvent: Record<string, unknown> | null } };
+
+const props = defineProps<Props>();
+const states = reactive<States>({
+    modal: {
+        visible: false,
+        currentEvent: null,
+    },
+});
 
 const calendarOptions = reactive<CalendarOptions>({
     aspectRatio: 2,
@@ -16,7 +27,7 @@ const calendarOptions = reactive<CalendarOptions>({
     buttonText: { today: 'Today', month: 'Month', day: 'Day', week: 'Week' },
     headerToolbar: {
         left: 'title',
-        end: 'timeGridWeek,dayGridMonth today,prev,next',
+        end: 'timeGridDay,timeGridWeek,dayGridMonth today,prev,next',
     },
     scrollTime: '08:00',
     eventTimeFormat: {
@@ -31,15 +42,44 @@ const calendarOptions = reactive<CalendarOptions>({
     },
     dayMaxEventRows: true,
     navLinks: true,
+    editable: true,
     fixedWeekCount: false,
     nowIndicator: true,
     initialView: 'dayGridMonth',
     lazyFetching: false,
-    events: props.events,
+    // events: props.events, // fetch here
+    initialEvents: props.events,
+    eventClick: function (info) {
+        toggleCurrentEventModal(info.event.id);
+    },
 });
+
+function toggleCurrentEventModal(id: string) {
+    states.modal.visible = !states.modal.visible;
+
+    if (states.modal.visible) {
+        states.modal.currentEvent = props.events.find((event) => event.id === parseInt(id))!;
+    } else {
+        states.modal.currentEvent = null;
+    }
+}
 </script>
 
 <template>
+    <OnClickOutside
+        :options="{ ignore: ['.ignore-outside-click'] }"
+        @trigger="toggleCurrentEventModal(states.modal.currentEvent!.id as string)">
+        <Dialog
+            v-model:visible="states.modal.visible"
+            class="ignore-outside-click"
+            modal
+            header="Header"
+            :style="{ width: '50rem' }"
+            :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <pre>{{ states.modal.currentEvent }}</pre>
+        </Dialog>
+    </OnClickOutside>
+
     <Head title="Calendar" />
 
     <AuthenticatedLayout>
