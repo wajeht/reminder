@@ -13,6 +13,7 @@
         "build:prod": "vue-tsc && vite build && vite build --ssr"
     },
     "devDependencies": {
+        "@commitlint/config-conventional": "^18.4.3",
         "@fullcalendar/daygrid": "^6.1.9",
         "@fullcalendar/interaction": "^6.1.9",
         "@fullcalendar/timegrid": "^6.1.9",
