@@ -11,12 +11,15 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 
         <div class="flex flex-col gap-10">
             <div class="flex flex-col gap-3">
-                <h1
-                    class="text-center text-8xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-                    reminder
-                </h1>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-4xl"> 🔔 </span>
 
-                <p class="text-slate-900 dark:text-white">
+                    <h1 class="text-5xl font-[900] tracking-tight text-gray-900 dark:text-gray-100">
+                        Reminder
+                    </h1>
+                </div>
+
+                <p class="text-gray-900 dark:text-gray-100">
                     schedule and track automatic countdowns for important events
                 </p>
             </div>

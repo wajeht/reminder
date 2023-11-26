@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -22,12 +21,14 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('home')">
-                                    <h1
-                                        class="text-center text-3xl font-[900] tracking-tight text-slate-900 dark:text-white">
-                                        reminder
-                                    </h1>
-                                    <!-- <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> -->
+                                    <div class="flex items-center justify-center gap-2 text-2xl">
+                                        <span> 🔔 </span>
+
+                                        <h1
+                                            class="font-[900] tracking-tight text-gray-900 dark:text-gray-100">
+                                            Reminder
+                                        </h1>
+                                    </div>
                                 </Link>
                             </div>
 

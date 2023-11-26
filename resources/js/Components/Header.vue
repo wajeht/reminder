@@ -13,15 +13,9 @@ import NavLink from '@/Components/NavLink.vue';
                 </NavLink>
 
                 <NavLink
-                    :href="route('app.about')"
-                    :active="route().current('app.about')">
-                    About
-                </NavLink>
-
-                <NavLink
-                    :href="route('app.contact')"
-                    :active="route().current('app.contact')">
-                    Contact
+                    :href="route('app.privacy')"
+                    :active="route().current('app.privacy')">
+                    Privacy
                 </NavLink>
             </div>
 

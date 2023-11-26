@@ -1,26 +1,20 @@
 <script setup lang="ts">
 import ThemeToggle from '@/Components/ThemeToggle.vue';
-import { Link } from '@inertiajs/vue3';
+import LinkWithStyle from './LinkWithStyle.vue';
 </script>
 
 <template>
     <div class="flex items-center justify-center gap-4 p-4 text-center text-xs">
         <ThemeToggle class="[&_svg]:text-xs [&_svg]:text-slate-900 [&_svg]:dark:text-slate-400" />
 
-        <span class="text-slate-900 dark:text-slate-400">
+        <span class="text-gray-900 dark:text-gray-400">
             Copyright © 2023
-            <Link
-                :href="route('app.index')"
-                class="hover:underline dark:hover:text-white">
-                reminder.jaw.dev
-            </Link>
+            <LinkWithStyle href="/">reminder.jaw.dev</LinkWithStyle>
             . Made with ❤️ by
-            <a
-                class="hover:underline dark:hover:text-white"
+            <LinkWithStyle
                 href="https://github.com/wajeht/reminder"
                 target="_blank"
-                title="reminder github repo"
-                >@wajeht ↗️</a
+                >@wajeht ↗</LinkWithStyle
             >
         </span>
     </div>
