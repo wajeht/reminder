@@ -50,25 +50,17 @@ const calendarOptions = reactive<CalendarOptions>({
     // events: props.events, // fetch here
     initialEvents: props.events,
     eventClick: function (info) {
-        toggleCurrentEventModal(info.event.id);
+        // prettier-ignore
+        states.modal.currentEvent = props.events.find((event) => event.id === parseInt(info.event.id))!;
+        states.modal.visible = true;
     },
 });
-
-function toggleCurrentEventModal(id: string) {
-    states.modal.visible = !states.modal.visible;
-
-    if (states.modal.visible) {
-        states.modal.currentEvent = props.events.find((event) => event.id === parseInt(id))!;
-    } else {
-        states.modal.currentEvent = null;
-    }
-}
 </script>
 
 <template>
     <OnClickOutside
         :options="{ ignore: ['.ignore-outside-click'] }"
-        @trigger="toggleCurrentEventModal(states.modal.currentEvent!.id as string)">
+        @trigger="() => ((states.modal.visible = false), (states.modal.currentEvent = null))">
         <Dialog
             v-model:visible="states.modal.visible"
             class="ignore-outside-click"
@@ -76,7 +68,9 @@ function toggleCurrentEventModal(id: string) {
             header="Header"
             :style="{ width: '50rem' }"
             :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-            <pre>{{ states.modal.currentEvent }}</pre>
+            <template #header>{{ states.modal.currentEvent!.title }}</template>
+
+            <p>{{ states.modal.currentEvent!.description }}</p>
         </Dialog>
     </OnClickOutside>
 

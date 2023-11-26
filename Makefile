@@ -1,6 +1,6 @@
 lint:
 	npm run lint
-	./vendor/bin/phpstan analyse .
+	./vendor/bin/phpstan analyse . --memory-limit=2G
 
 clear:
 	php artisan config:clear
@@ -32,7 +32,7 @@ test:
 	php artisan test
 
 build:
-	npm run format
+	npm run build:prod
 
 db:
 	touch database/database.sqlite
