@@ -11,6 +11,9 @@ clear:
 pint:
 	./vendor/bin/pint
 
+link:
+	php artisan storage:link
+
 deploy:
 	./deploy.sh
 

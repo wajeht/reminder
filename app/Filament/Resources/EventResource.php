@@ -3,10 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Enums\RecurringType;
+use App\Enums\UnitType;
 use App\Filament\Resources\EventResource\Pages;
 use App\Models\Event;
 use App\Models\User;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,6 +20,8 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\ColorColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -34,10 +39,15 @@ class EventResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        TextInput::make('name')->required(),
+                        TextInput::make('title')->required(),
                         TextInput::make('description')->nullable(),
                         DatePicker::make('start_date')->native(false)->required(),
                         DatePicker::make('end_date')->native(false)->nullable(),
+
+                        ColorPicker::make('color')->nullable(),
+                        FileUpload::make('logo_url')->image()->imageEditor()
+                            ->openable()->downloadable()->storeFiles(),
+                        Select::make('unit')->required()->options(UnitType::getAsAssociatedArray()),
 
                         Select::make('recurrence_type')
                             ->required()
@@ -61,7 +71,10 @@ class EventResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                ImageColumn::make('logo_url'),
+                ColorColumn::make('color'),
+                TextColumn::make('unit'),
+                TextColumn::make('title'),
                 TextColumn::make('description')->limit(50)->toggleable()->toggledHiddenByDefault(),
                 TextColumn::make('start_date')->dateTime(),
                 TextColumn::make('end_date')->dateTime(),

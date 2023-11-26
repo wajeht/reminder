@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index(Request $request): InertiaResponse
     {
         return Inertia::render('Home', [
-            'events' => request()->user()->load('events')->events->map(function (Event $event) {
+            'events' => $request->user()->load('events')->events->map(function (Event $event) {
                 return [
                     ...$event->toArray(),
                     'date' => $event->start_date,
