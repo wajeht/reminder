@@ -11,7 +11,7 @@ touch database/database.sqlite
 npm run build:prod
 npm run ssr
 php artisan migrate --no-interaction --force
-php artisan db:seed --class=AdminUserSeeder
+php artisan db:seed --class=AdminUserSeeder --no-interaction --force
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
