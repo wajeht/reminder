@@ -149,6 +149,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('home')">
                             Home
                         </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            :href="route('calendar')"
+                            :active="route().current('calendar')">
+                            Calendar
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
