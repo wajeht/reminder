@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RecurringType;
+use App\Enums\UnitType;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,11 +18,16 @@ return new class extends Migration
             $table->id('id');
             $table->string('title');
             $table->text('description')->nullable();
+
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
 
             $table->enum('recurrence_type', RecurringType::getValues())->nullable();
             $table->integer('recurrence_interval')->nullable();
+
+            $table->string('logo_url')->nullable();
+            $table->string('color')->nullable();
+            $table->string('unit')->default(UnitType::Days->value);
 
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

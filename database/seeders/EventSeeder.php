@@ -14,25 +14,25 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         // Seed daily events
-        Event::factory()->count(5)->create([
+        Event::factory()->count(20)->create([
             'recurrence_type' => RecurringType::Daily->value,
             'recurrence_interval' => null,
         ]);
 
         // Seed weekly events
-        Event::factory()->count(5)->create([
+        Event::factory()->count(20)->create([
             'recurrence_type' => RecurringType::Weekly->value,
             'recurrence_interval' => null,
         ]);
 
         // Seed monthly events
-        Event::factory()->count(5)->create([
+        Event::factory()->count(20)->create([
             'recurrence_type' => RecurringType::Monthly->value,
             'recurrence_interval' => null,
         ]);
 
         // Seed custom recurrence events
-        Event::factory()->count(5)->create([
+        Event::factory()->count(20)->create([
             'recurrence_type' => RecurringType::Custom->value,
             'recurrence_interval' => 3,
         ]);

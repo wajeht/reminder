@@ -16,6 +16,7 @@ class HomeController extends Controller
                 return [
                     ...$event->toArray(),
                     'date' => $event->start_date,
+                    'count_down' => $event->countDown(),
                 ];
             }),
         ]);

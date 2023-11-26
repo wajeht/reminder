@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\RecurringType;
+use App\Enums\UnitType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,10 +24,17 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
+
+            'logo_url' => $this->faker->imageUrl(50, 50),
+            'color' => $this->faker->hexColor(),
+            'unit' => $this->faker->randomElement(UnitType::cases()),
+
             'start_date' => $startDate,
             'end_date' => $this->faker->dateTimeBetween($startDate, 'last day of this month'),
+
             'recurrence_type' => $this->faker->randomElement(RecurringType::getValues()),
             'recurrence_interval' => $this->faker->randomElement([null, 1, 7, 30]),
+
             'user_id' => User::inRandomOrder()->first()->id,
         ];
     }

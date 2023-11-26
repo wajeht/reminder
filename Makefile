@@ -35,6 +35,11 @@ test:
 build:
 	npm run build:prod
 
+ide:
+	php artisan clear-compiled
+	php artisan ide-helper:generate
+	php artisan ide-helper:models
+
 db:
 	touch database/database.sqlite
 
