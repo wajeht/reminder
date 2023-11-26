@@ -14,9 +14,7 @@ class CalendarController extends Controller
         return Inertia::render('Calendar', [
             'events' => request()->user()->load('events')->events->map(function (Event $event) {
                 return [
-                    'id' => $event->id,
-                    'title' => $event->name,
-                    'description' => $event->description,
+                    ...$event->toArray(),
                     'date' => $event->start_date,
                 ];
             }),

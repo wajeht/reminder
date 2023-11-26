@@ -21,7 +21,7 @@ class EventFactory extends Factory
         $startDate = $this->faker->dateTimeBetween('first day of this month', 'last day of this month');
 
         return [
-            'name' => $this->faker->sentence,
+            'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'start_date' => $startDate,
             'end_date' => $this->faker->dateTimeBetween($startDate, 'last day of this month'),

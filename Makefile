@@ -20,6 +20,7 @@ install:
 
 format:
 	npm run format
+	./vendor/bin/pint
 
 test-ui:
 	npm run test

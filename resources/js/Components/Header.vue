@@ -31,6 +31,14 @@ import NavLink from '@/Components/NavLink.vue';
                 </a>
 
                 <NavLink
+                    v-if="$page.props.auth.user"
+                    :href="route('home')"
+                    :active="route().current('home')">
+                    Dashboard
+                </NavLink>
+
+                <NavLink
+                    v-else
                     :href="route('login')"
                     :active="route().current('login')">
                     Login
