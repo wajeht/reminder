@@ -27,7 +27,7 @@ function formatDate(date: string | Date) {
                     <div class="flex-none">
                         <div>
                             <img
-                                :src="event!.logo_url!"
+                                :src="event!.logo_url! as string"
                                 alt="logo_url" />
                         </div>
                     </div>
