@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AdminUserSeeder extends Seeder
 {
@@ -17,10 +18,11 @@ class AdminUserSeeder extends Seeder
             $existingAdmin = User::where('email', env('ADMIN_USER_EMAIL'))->first();
 
             if (! $existingAdmin) {
-                $newAdmin = User::factory()->create([
-                    'name' => env('ADMIN_USER_NAME'),
-                    'email' => env('ADMIN_USER_EMAIL'),
-                ]);
+                $newAdmin = new User();
+                $newAdmin->name = env('ADMIN_USER_NAME');
+                $newAdmin->email = env('ADMIN_USER_EMAIL');
+                $newAdmin->password = bcrypt(Str::random(32));
+                $newAdmin->save();
 
                 $token = Password::createToken($newAdmin);
                 $newAdmin->sendPasswordResetNotification($token);
