@@ -3,13 +3,14 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
+        "ssr": "node ./node_modules/pm2/bin/pm2 start ecosystem.config.json",
+        "prepare": "husky install",
+        "type-check": "vue-tsc --noEmit",
         "test": "echo \"not yet\"",
         "format": "prettier \"resources/**/*.{js,ts,vue}\" --write",
-        "type-check": "vue-tsc --noEmit",
         "lint": "eslint \"resources/**/*.{js,ts,vue}\" --fix",
         "build": "npm run format && npm run lint && npm run type-check && vite build && vite build --ssr",
-        "build:prod": "vue-tsc && vite build && vite build --ssr",
-        "ssr": "node ./node_modules/pm2/bin/pm2 start ecosystem.config.json"
+        "build:prod": "vue-tsc && vite build && vite build --ssr"
     },
     "devDependencies": {
         "@fullcalendar/daygrid": "^6.1.9",
@@ -47,7 +48,8 @@
         "@fullcalendar/vue3": "^6.1.9",
         "@vueuse/components": "^10.6.1",
         "@vueuse/core": "^10.6.1",
-        "pm2": "^5.3.0",
+        "husky": "^8.0.3",
+        "pm2": "^2.10.4",
         "primevue": "^3.41.1"
     }
 }
