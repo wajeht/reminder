@@ -2,6 +2,12 @@ lint:
 	npm run lint
 	./vendor/bin/pint
 
+clear:
+	php artisan config:clear
+	php artisan view:clear
+	php artisan route:clear
+	php artisan cache:clear
+
 pint:
 	./vendor/bin/pint
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -47,5 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
     }
 }
