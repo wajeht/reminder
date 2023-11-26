@@ -20,5 +20,9 @@ export default defineConfig({
         }),
         eslintPlugin(),
     ],
-    test: {},
+    test: {
+        globals: true,
+        watch: true,
+        setupFiles: './resources/js/tests/test-setup.ts',
+    },
 });
