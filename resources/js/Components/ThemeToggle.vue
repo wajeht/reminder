@@ -4,7 +4,7 @@ import { useDark, useToggle, useStorage } from '@vueuse/core';
 import { watch } from 'vue';
 
 const isDark = useDark();
-const savedTheme = useStorage('reminder-saved-theme', false);
+const savedTheme = useStorage('reminder-saved-theme', true);
 
 const toggleDark = useToggle(isDark);
 
