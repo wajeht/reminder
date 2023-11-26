@@ -52,7 +52,7 @@ class EventResource extends Resource
                             ->numeric()
                             ->visible(fn (callable $get) => $get('recurrence_type') === 'custom'),
 
-                        Select::make('user_id')->options(User::all()->pluck('name', 'id'))->preload()->label('User'),
+                        Select::make('user_id')->options(User::pluck('name', 'id'))->preload()->label('User'),
                     ]),
             ]);
     }

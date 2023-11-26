@@ -1,6 +1,6 @@
 lint:
 	npm run lint
-	./vendor/bin/pint
+	./vendor/bin/phpstan analyse .
 
 clear:
 	php artisan config:clear
@@ -38,5 +38,6 @@ db:
 	touch database/database.sqlite
 
 refresh-db:
+	rm database/database.sqlite
 	touch database/database.sqlite
 	php artisan migrate:refresh --seed

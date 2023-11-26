@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleNames;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Password;
@@ -21,6 +22,7 @@ class AdminUserSeeder extends Seeder
                 $newAdmin = new User();
                 $newAdmin->name = env('ADMIN_USER_NAME');
                 $newAdmin->email = env('ADMIN_USER_EMAIL');
+                $newAdmin->user_type = RoleNames::ADMIN->value;
                 $newAdmin->password = bcrypt(Str::random(32));
                 $newAdmin->save();
 

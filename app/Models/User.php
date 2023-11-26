@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleNames;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -53,7 +54,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function isAdmin(): bool
     {
-        return $this->email === env('ADMIN_USER_EMAIL');
+        return $this->user_type === RoleNames::ADMIN->value;
     }
 
     public function canAccessPanel(Panel $panel): bool
