@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\RoleNames;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -24,6 +25,7 @@ class AdminUserSeeder extends Seeder
                 $newAdmin->email = env('ADMIN_USER_EMAIL');
                 $newAdmin->user_type = RoleNames::ADMIN->value;
                 $newAdmin->password = bcrypt(Str::random(32));
+                $newAdmin->email_verified_at = Carbon::now();
                 $newAdmin->save();
 
                 $token = Password::createToken($newAdmin);
