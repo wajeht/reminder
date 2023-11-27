@@ -23,10 +23,10 @@ class EventFactory extends Factory
 
         return [
             'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->boolean() ? $this->faker->paragraph : null,
 
             'logo_url' => $this->faker->imageUrl(50, 50),
-            'color' => $this->faker->hexColor(),
+            'color' => $this->faker->boolean ? $this->faker->hexColor() : null,
             'unit' => $this->faker->randomElement(UnitType::cases()),
 
             'start_date' => $startDate,

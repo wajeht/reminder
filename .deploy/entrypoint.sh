@@ -10,6 +10,7 @@ echo "🎬 artisan commands"
 touch database/database.sqlite
 npm run build:prod
 npm run ssr
+php artisan storage:link
 php artisan migrate --no-interaction --force
 php artisan db:seed --class=AdminUserSeeder --no-interaction --force
 php artisan config:cache

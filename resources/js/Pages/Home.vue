@@ -9,7 +9,7 @@ import { OnClickOutside } from '@vueuse/components';
 type Props = { events: Record<string, any>[] };
 const props = defineProps<Props>();
 
-type States = { menu: { currentEvent: Record<string, any>; open: boolean } };
+type States = { menu: { currentEvent: Record<string, any> | null; open: boolean } };
 
 const states = reactive<States>({
     menu: {
@@ -22,9 +22,20 @@ function formatDate(date: string | Date): string {
     return dayjs(date).format('MM/DD/YYYY h:mm:s A');
 }
 
-function toggleEventAction(id: string): void {
-    states.menu.currentEvent = props.events.find((event) => event.id === parseInt(id))!;
+function toggleEventAction(id: string, forceClose = false): void {
+    if (forceClose === true) {
+        states.menu.open = false;
+        states.menu.currentEvent = null;
+        return;
+    }
+
     states.menu.open = !states.menu.open;
+
+    if (states.menu.open) {
+        states.menu.currentEvent = props.events.find((event) => event.id === parseInt(id))!;
+    } else {
+        states.menu.currentEvent = null;
+    }
 }
 </script>
 
@@ -51,10 +62,14 @@ function toggleEventAction(id: string): void {
                     </div>
 
                     <div class="flex-1">
-                        <div class="flex h-full flex-col gap-1">
+                        <div class="flex h-full flex-col justify-center gap-1">
                             <span class="font-semibold">{{ event.title }}</span>
 
-                            <span class="text-sm text-gray-500">{{ event.description }}</span>
+                            <span
+                                v-if="event.description"
+                                class="text-sm text-gray-500"
+                                >{{ event.description }}</span
+                            >
                         </div>
                     </div>
 
@@ -69,18 +84,20 @@ function toggleEventAction(id: string): void {
                     </div>
 
                     <div class="relative flex-none">
-                        <OnClickOutside @trigger="() => toggleEventAction(event.id)">
-                            <button
-                                class="rounded-sm p-1 text-sm hover:bg-gray-200"
-                                @click="toggleEventAction(event.id)">
-                                <Icon
-                                    icon="heroicons:ellipsis-vertical-20-solid"
-                                    class="items-start text-lg font-semibold text-gray-900 dark:text-gray-100" />
-                            </button>
+                        <button
+                            class="ignore-outside-click rounded-sm p-1 text-sm hover:bg-gray-100 hover:dark:bg-gray-700"
+                            @click="toggleEventAction(event.id)">
+                            <Icon
+                                icon="heroicons:ellipsis-vertical-20-solid"
+                                class="items-start text-lg font-semibold text-gray-900 dark:text-gray-100" />
+                        </button>
 
+                        <OnClickOutside
+                            :options="{ ignore: ['.ignore-outside-click'] }"
+                            @trigger="toggleEventAction(event.id, true)">
                             <div
-                                v-if="states.menu.open && event.id === states.menu.currentEvent.id"
-                                class="absolute end-0 z-50 mt-2 w-48 rounded-md border bg-white shadow-lg ltr:origin-top-right rtl:origin-top-left dark:bg-gray-800">
+                                v-if="states.menu.open && event.id === states.menu.currentEvent?.id"
+                                class="absolute right-0 z-10 mt-1 w-[192px] rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-700">
                                 <div class="flex h-full w-full flex-col">
                                     <span
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
@@ -89,12 +106,12 @@ function toggleEventAction(id: string): void {
 
                                     <span
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
-                                        >Edit</span
+                                        >Calendar</span
                                     >
 
                                     <span
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
-                                        >Edit</span
+                                        >Delete</span
                                     >
                                 </div>
                             </div>
