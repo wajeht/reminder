@@ -29,6 +29,7 @@
         "@vue/server-renderer": "^3.2.31",
         "autoprefixer": "^10.4.12",
         "axios": "^1.6.1",
+        "commitlint": "^18.4.3",
         "eslint": "^8.54.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-tailwindcss": "^3.13.0",

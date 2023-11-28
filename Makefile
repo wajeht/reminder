@@ -46,6 +46,15 @@ ide:
 db:
 	touch database/database.sqlite
 
+restart:
+	git pull
+	composer install
+	npm install
+	rm -rf storage/app/public/*
+	rm database/database.sqlite
+	touch database/database.sqlite
+	php artisan migrate:refresh --seed
+
 refresh-db:
 	rm -rf storage/app/public/*
 	rm database/database.sqlite

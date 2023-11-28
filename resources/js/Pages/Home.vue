@@ -66,6 +66,7 @@ function toggleEventAction(id: string, forceClose = false): void {
                     <div class="flex-1">
                         <div class="flex h-full flex-col justify-center gap-1">
                             <span class="font-semibold">{{ event.title }}</span>
+
                             <span
                                 v-if="event.description"
                                 class="text-sm text-gray-500"
@@ -77,6 +78,7 @@ function toggleEventAction(id: string, forceClose = false): void {
                     <div class="flex-none text-right">
                         <div class="flex h-full flex-col justify-between gap-1">
                             <span class="font-medium">{{ event.count_down }}</span>
+
                             <span class="text-xs text-gray-500">{{
                                 formatDate(event.end_date as Date)
                             }}</span>
