@@ -7,10 +7,9 @@ import { reactive } from 'vue';
 import { OnClickOutside } from '@vueuse/components';
 
 type Props = { events: Record<string, any>[] };
-const props = defineProps<Props>();
-
 type States = { menu: { currentEvent: Record<string, any> | null; open: boolean } };
 
+const props = defineProps<Props>();
 const states = reactive<States>({
     menu: {
         currentEvent: {},
@@ -58,30 +57,58 @@ function toggleEventAction(id: string, forceClose = false): void {
                         class="flex-none">
                         <div class="max-w-[50px]">
                             <img
+                                class="rounded-md"
                                 :src="`storage/${event!.logo_url}`! as string"
                                 alt="logo_url" />
                         </div>
                     </div>
 
                     <div class="flex-1">
-                        <div class="flex h-full flex-col justify-center gap-1">
+                        <div class="flex h-full flex-col justify-between gap-1">
                             <span class="font-semibold">{{ event.title }}</span>
 
-                            <span
-                                v-if="event.description"
-                                class="text-sm text-gray-500"
-                                >{{ event.description }}</span
-                            >
+                            <div class="flex flex-col gap-2">
+                                <span
+                                    v-if="event.description"
+                                    class="text-sm text-gray-500"
+                                    >{{ event.description }}</span
+                                >
+
+                                <div class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1 text-xs text-gray-500">
+                                        <Icon icon="heroicons:calendar-days" />
+
+                                        <span
+                                            >Start: {{ formatDate(event.start_date as Date) }}</span
+                                        >
+                                    </div>
+
+                                    <div
+                                        v-if="event.end_date"
+                                        class="flex items-center gap-1 text-xs text-gray-500">
+                                        <Icon icon="heroicons:calendar-days" />
+
+                                        <span>End: {{ formatDate(event.end_date as Date) }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="flex-none text-right">
                         <div class="flex h-full flex-col justify-between gap-1">
-                            <span class="font-medium">{{ event.count_down }}</span>
+                            <div class="flex items-center justify-end gap-1">
+                                <span class="font-medium">{{ event.count_down }}</span>
 
-                            <span class="text-xs text-gray-500">{{
-                                formatDate(event.end_date as Date)
-                            }}</span>
+                                <span class="tex-xs text-gray-500">left</span>
+                            </div>
+
+                            <div
+                                class="flex items-center justify-center gap-1 text-xs text-gray-500">
+                                <span>Repeat {{ event.recurrence_type }}</span>
+
+                                <Icon icon="heroicons:arrow-path" />
+                            </div>
                         </div>
                     </div>
 
