@@ -43,15 +43,17 @@ function toggleEventAction(id: string, forceClose = false): void {
 
     <AuthenticatedLayout>
         <div class="mx-auto grid max-w-7xl grid-cols-4 gap-4 py-12 sm:px-6 lg:px-8">
+            <!-- menu -->
             <div
-                class="flex flex-col overflow-hidden bg-white p-6 text-gray-900 shadow-sm dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg"></div>
+                class="flex flex-col overflow-hidden bg-white p-6 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg"></div>
 
+            <!-- cards -->
             <div class="col-span-3 flex flex-col gap-4">
                 <div
                     v-for="(event, idx) in props.events"
                     :key="idx"
                     :style="event.color ? `border-left: 4px solid ${event.color}` : ''"
-                    class="flex gap-4 bg-white p-6 text-gray-900 shadow-sm dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg">
+                    class="flex gap-4 bg-white p-6 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg">
                     <div
                         v-if="event.logo_url"
                         class="flex-none">
