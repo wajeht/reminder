@@ -46,7 +46,7 @@ class EventResource extends Resource
 
                         ColorPicker::make('color')->nullable(),
                         FileUpload::make('logo_url')->image()->imageEditor()
-                            ->openable()->downloadable()->storeFiles(),
+                            ->openable()->downloadable(),
                         Select::make('unit')->required()->options(UnitType::getAsAssociatedArray()),
 
                         Select::make('recurrence_type')

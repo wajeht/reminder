@@ -56,7 +56,7 @@ function toggleEventAction(id: string, forceClose = false): void {
                     <div class="flex-none">
                         <div class="max-w-[50px]">
                             <img
-                                :src="event!.logo_url! as string"
+                                :src="`storage/${event!.logo_url}`! as string"
                                 alt="logo_url" />
                         </div>
                     </div>

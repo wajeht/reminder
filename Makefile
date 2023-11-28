@@ -47,6 +47,7 @@ db:
 	touch database/database.sqlite
 
 refresh-db:
+	rm -rf storage/app/public/*
 	rm database/database.sqlite
 	touch database/database.sqlite
 	php artisan migrate:refresh --seed
