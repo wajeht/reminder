@@ -53,7 +53,9 @@ function toggleEventAction(id: string, forceClose = false): void {
                     :key="idx"
                     :style="event.color ? `border-left: 4px solid ${event.color}` : ''"
                     class="flex gap-4 bg-white p-6 text-gray-900 shadow-sm dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg">
-                    <div class="flex-none">
+
+
+                    <div v-if="event.logo_url" class="flex-none">
                         <div class="max-w-[50px]">
                             <img
                                 :src="`storage/${event!.logo_url}`! as string"
@@ -64,7 +66,6 @@ function toggleEventAction(id: string, forceClose = false): void {
                     <div class="flex-1">
                         <div class="flex h-full flex-col justify-center gap-1">
                             <span class="font-semibold">{{ event.title }}</span>
-
                             <span
                                 v-if="event.description"
                                 class="text-sm text-gray-500"
@@ -76,10 +77,7 @@ function toggleEventAction(id: string, forceClose = false): void {
                     <div class="flex-none text-right">
                         <div class="flex h-full flex-col justify-between gap-1">
                             <span class="font-medium">{{ event.count_down }}</span>
-
-                            <span class="text-sm text-gray-500">{{
-                                formatDate(event.end_date as Date)
-                            }}</span>
+                            <span class="text-xs text-gray-500">{{ formatDate(event.end_date as Date) }}</span>
                         </div>
                     </div>
 
