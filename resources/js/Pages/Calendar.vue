@@ -86,6 +86,7 @@ function closeModal(): void {
         :options="{ ignore: ['.ignore-outside-click'] }"
         @trigger="closeModal">
         <Dialog
+            v-if="states.modal.currentEvent"
             v-model:visible="states.modal.visible"
             class="ignore-outside-click"
             modal
