@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/vue';
 import dayjs from 'dayjs';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 import { OnClickOutside } from '@vueuse/components';
 
@@ -35,6 +35,18 @@ function toggleEventAction(id: string, forceClose = false): void {
     } else {
         states.menu.currentEvent = null;
     }
+}
+
+function viewEvent(id: number): void {
+    router.visit(route('calendar', { id }));
+}
+
+function editEvent(id: number): void {
+    alert(`id: ${id} editEvent() has not been implemented yet!`);
+}
+
+function deleteEvent(id: number): void {
+    alert(`id: ${id} deleteEvent() has not been implemented yet!`);
 }
 </script>
 
@@ -134,20 +146,23 @@ function toggleEventAction(id: string, forceClose = false): void {
                                 v-if="states.menu.open && event.id === states.menu.currentEvent?.id"
                                 class="absolute right-0 z-10 mt-1 w-[192px] rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-700">
                                 <div class="flex h-full w-full flex-col">
-                                    <span
+                                    <button
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
-                                        >Edit</span
-                                    >
+                                        @click="editEvent(event.id)">
+                                        Edit
+                                    </button>
 
-                                    <span
+                                    <button
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
-                                        >Calendar</span
-                                    >
+                                        @click="viewEvent(event.id)">
+                                        Calendar
+                                    </button>
 
-                                    <span
+                                    <button
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
-                                        >Delete</span
-                                    >
+                                        @click="deleteEvent(event.id)">
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         </OnClickOutside>

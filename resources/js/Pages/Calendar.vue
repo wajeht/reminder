@@ -6,9 +6,10 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { CalendarOptions } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Head } from '@inertiajs/vue3';
-import { reactive, ref } from 'vue';
+import { reactive, onMounted } from 'vue';
 import Dialog from 'primevue/dialog';
 import { OnClickOutside } from '@vueuse/components';
+import { nextTick } from 'vue';
 
 type Props = { events: Record<string, unknown>[] };
 type States = { modal: { visible: boolean; currentEvent: Record<string, unknown> | null } };
@@ -19,6 +20,16 @@ const states = reactive<States>({
         visible: false,
         currentEvent: null,
     },
+});
+
+onMounted(async () => {
+    const eventId = new URLSearchParams(window.location.search).get('id');
+    nextTick(() => {
+        states.modal.currentEvent = props.events.find(
+            (event) => event.id === parseInt(eventId as string),
+        )!;
+        states.modal.visible = true;
+    });
 });
 
 const calendarOptions = reactive<CalendarOptions>({
