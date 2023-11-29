@@ -27,5 +27,8 @@ createServer((page) =>
                     location: new URL(page.props.ziggy.location),
                 });
         },
+        progress: {
+            color: '#4e46dc',
+        },
     }),
 );
