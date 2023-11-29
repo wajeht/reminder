@@ -23,8 +23,8 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
-            .use(ToastService)
             .use(PrimeVue, { pt: {} })
+            .use(ToastService)
             .mount(el);
     },
     progress: {

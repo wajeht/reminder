@@ -27,6 +27,7 @@
         "toastservice",
         "toggleable",
         "tokenable",
+        "usetoast",
         "vueuse",
         "wajeht"
     ],

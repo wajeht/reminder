@@ -7,9 +7,16 @@ import { Head, router } from '@inertiajs/vue3';
 import { OnClickOutside } from '@vueuse/components';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Event } from '@/types/index';
+import Dialog from 'primevue/dialog';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { useToast } from 'primevue/usetoast';
 
 type Props = { events: Event[] };
-type States = { menu: { currentEvent: Event | null; open: boolean } };
+type States = {
+    menu: { currentEvent: Event | null; open: boolean };
+    modal: { loading: boolean; visible: boolean; eventId: number | null };
+};
 
 const props = defineProps<Props>();
 const states = reactive<States>({
@@ -17,7 +24,14 @@ const states = reactive<States>({
         currentEvent: null,
         open: false,
     },
+    modal: {
+        loading: false,
+        visible: false,
+        eventId: null,
+    },
 });
+
+const toast = useToast();
 
 function viewEvent(id: number): void {
     router.visit(route('calendar', { id }));
@@ -29,10 +43,24 @@ function editEvent(id: number): void {
 
 async function deleteEvent(id: number): Promise<void> {
     try {
+        states.modal.loading = true;
         await axios.delete(`/api/v1/events/${id}`);
         router.reload({ only: ['events'] });
+        closeConfirmDeletionModal();
+        states.modal.eventId = -1;
+        toast.add({
+            severity: 'success',
+            detail: 'Deleted!',
+            life: 3000,
+        });
     } catch (error) {
-        alert(error);
+        toast.add({
+            severity: 'error',
+            detail: 'Oops, something went wrong!',
+            life: 3000,
+        });
+    } finally {
+        states.modal.loading = false;
     }
 }
 
@@ -55,9 +83,50 @@ function toggleEventAction(id: number, forceClose = false): void {
         states.menu.currentEvent = null;
     }
 }
+
+function openConfirmDeletionModal(id: number): void {
+    states.modal.visible = true;
+    states.modal.eventId = id;
+}
+
+function closeConfirmDeletionModal(): void {
+    states.modal.visible = false;
+    states.modal.eventId = -1;
+}
 </script>
 
 <template>
+    <OnClickOutside
+        :options="{ ignore: ['.ignore-outside-click'] }"
+        @trigger="closeConfirmDeletionModal">
+        <Dialog
+            v-if="states.modal.eventId"
+            v-model:visible="states.modal.visible"
+            class="ignore-outside-click"
+            modal
+            header="Warning"
+            :style="{ width: 'calc(100vw - 75%)' }"
+            :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <span class="text-sm">Are you sure you want to delete this event?</span>
+
+            <template #footer>
+                <div class="flex gap-2">
+                    <SecondaryButton
+                        :disabled="states.modal.loading"
+                        @click="closeConfirmDeletionModal">
+                        Cancel
+                    </SecondaryButton>
+
+                    <PrimaryButton
+                        :disabled="states.modal.loading"
+                        @click="deleteEvent(states.modal.eventId)">
+                        Delete
+                    </PrimaryButton>
+                </div>
+            </template>
+        </Dialog>
+    </OnClickOutside>
+
     <Head title="Home" />
 
     <AuthenticatedLayout>
@@ -175,7 +244,7 @@ function toggleEventAction(id: number, forceClose = false): void {
 
                                         <button
                                             class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
-                                            @click="deleteEvent(event.id)">
+                                            @click="openConfirmDeletionModal(event.id)">
                                             Delete
                                         </button>
                                     </div>
