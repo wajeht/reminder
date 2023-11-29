@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { nextTick } from 'vue';
+import Dialog from 'primevue/dialog';
+import { Head } from '@inertiajs/vue3';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { reactive, onMounted, computed } from 'vue';
+import { OnClickOutside } from '@vueuse/components';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { CalendarOptions } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Head } from '@inertiajs/vue3';
-import { reactive, onMounted } from 'vue';
-import Dialog from 'primevue/dialog';
-import { OnClickOutside } from '@vueuse/components';
-import { nextTick } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 type Props = { events: Record<string, unknown>[] };
 type States = { modal: { visible: boolean; currentEvent: Record<string, unknown> | null } };
@@ -22,11 +22,12 @@ const states = reactive<States>({
     },
 });
 
+const computedEventId = computed(() => new URLSearchParams(window.location.search).get('id'));
+
 onMounted(async () => {
-    const eventId = new URLSearchParams(window.location.search).get('id');
     nextTick(() => {
         states.modal.currentEvent = props.events.find(
-            (event) => event.id === parseInt(eventId as string),
+            (event) => event.id === parseInt(computedEventId.value as string),
         )!;
         states.modal.visible = true;
     });
@@ -66,12 +67,24 @@ const calendarOptions = reactive<CalendarOptions>({
         states.modal.visible = true;
     },
 });
+
+function closeModal(): void {
+    states.modal.visible = false;
+    states.modal.currentEvent = null;
+
+    if (computedEventId.value) {
+        const params = new URLSearchParams(window.location.search);
+        params.delete('id');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+}
 </script>
 
 <template>
     <OnClickOutside
+        v-if="states.modal.currentEvent"
         :options="{ ignore: ['.ignore-outside-click'] }"
-        @trigger="() => ((states.modal.visible = false), (states.modal.currentEvent = null))">
+        @trigger="closeModal">
         <Dialog
             v-model:visible="states.modal.visible"
             class="ignore-outside-click"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
 import dayjs from 'dayjs';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
+import { Icon } from '@iconify/vue';
+import { Head, router } from '@inertiajs/vue3';
 import { OnClickOutside } from '@vueuse/components';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 type Props = { events: Record<string, any>[] };
 type States = { menu: { currentEvent: Record<string, any> | null; open: boolean } };
@@ -16,6 +16,18 @@ const states = reactive<States>({
         open: false,
     },
 });
+
+function viewEvent(id: number): void {
+    router.visit(route('calendar', { id }));
+}
+
+function editEvent(id: number): void {
+    alert(`id: ${id} editEvent() has not been implemented yet!`);
+}
+
+function deleteEvent(id: number): void {
+    alert(`id: ${id} deleteEvent() has not been implemented yet!`);
+}
 
 function formatDate(date: string | Date): string {
     return dayjs(date).format('MM/DD/YYYY h:mm:s A');
@@ -35,18 +47,6 @@ function toggleEventAction(id: string, forceClose = false): void {
     } else {
         states.menu.currentEvent = null;
     }
-}
-
-function viewEvent(id: number): void {
-    router.visit(route('calendar', { id }));
-}
-
-function editEvent(id: number): void {
-    alert(`id: ${id} editEvent() has not been implemented yet!`);
-}
-
-function deleteEvent(id: number): void {
-    alert(`id: ${id} deleteEvent() has not been implemented yet!`);
 }
 </script>
 
