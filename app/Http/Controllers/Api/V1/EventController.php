@@ -16,4 +16,14 @@ class EventController extends Controller
             'data' => Event::all(),
         ]);
     }
+
+    public function destroy(Request $request, Event $event): JsonResponse
+    {
+        $event->delete();
+
+        return response()->json([
+            'message' => 'ok',
+            'data' => $event,
+        ]);
+    }
 }

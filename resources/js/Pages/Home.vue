@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import axios from 'axios';
 import dayjs from 'dayjs';
 import { reactive } from 'vue';
 import { Icon } from '@iconify/vue';
@@ -26,8 +27,13 @@ function editEvent(id: number): void {
     alert(`id: ${id} editEvent() has not been implemented yet!`);
 }
 
-function deleteEvent(id: number): void {
-    alert(`id: ${id} deleteEvent() has not been implemented yet!`);
+async function deleteEvent(id: number): Promise<void> {
+    try {
+        await axios.delete(`/api/v1/events/${id}`);
+        router.reload({ only: ['events'] });
+    } catch (error) {
+        alert(error);
+    }
 }
 
 function formatDate(date: string | Date): string {
@@ -181,7 +187,7 @@ function toggleEventAction(id: number, forceClose = false): void {
 
                 <div
                     v-else
-                    class="flex items-center justify-center gap-4 bg-white p-4 text-xs font-light text-gray-500 shadow dark:bg-gray-800 sm:rounded-lg sm:p-8">
+                    class="flex items-center justify-center gap-4 bg-white p-4 text-sm font-light text-gray-500 shadow dark:bg-gray-800 sm:rounded-lg sm:p-8">
                     There are no events currently.
                 </div>
             </div>
