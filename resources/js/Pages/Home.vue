@@ -180,6 +180,7 @@ function toggleEventAction(id: number, forceClose = false): void {
                 </template>
 
                 <div
+                    v-else
                     class="flex items-center justify-center gap-4 bg-white p-4 text-xs font-light text-gray-500 shadow dark:bg-gray-800 sm:rounded-lg sm:p-8">
                     There are no events currently.
                 </div>
