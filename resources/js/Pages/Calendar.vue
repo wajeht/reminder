@@ -84,12 +84,10 @@ const calendarOptions = reactive<CalendarOptions>({
         </template>
 
         <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
                 <div
-                    class="overflow-hidden bg-white p-4 shadow dark:bg-gray-800 sm:rounded-lg sm:p-8">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <FullCalendar :options="calendarOptions"></FullCalendar>
-                    </div>
+                    class="bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
+                    <FullCalendar :options="calendarOptions"></FullCalendar>
                 </div>
             </div>
         </div>

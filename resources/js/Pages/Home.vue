@@ -42,18 +42,22 @@ function toggleEventAction(id: string, forceClose = false): void {
     <Head title="Home" />
 
     <AuthenticatedLayout>
-        <div class="mx-auto grid max-w-7xl grid-cols-4 gap-4 py-12 sm:px-6 lg:px-8">
+        <div class="mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6 lg:px-8">
             <!-- menu -->
             <div
-                class="flex flex-col overflow-hidden bg-white p-6 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg"></div>
+                class="flex w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:w-[30%] sm:rounded-lg sm:p-8">
+                <div class="w-full rounded bg-red-200 px-4 py-2">Add</div>
+
+                <div class="w-full rounded bg-red-200 px-4 py-2">Settings</div>
+            </div>
 
             <!-- cards -->
-            <div class="col-span-3 flex flex-col gap-4">
+            <div class="flex w-full flex-col gap-4 sm:w-[70%]">
                 <div
                     v-for="(event, idx) in props.events"
                     :key="idx"
                     :style="event.color ? `border-left: 4px solid ${event.color}` : ''"
-                    class="flex gap-4 bg-white p-6 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg">
+                    class="flex gap-4 bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
                     <div
                         v-if="event.logo_url"
                         class="flex-none">
