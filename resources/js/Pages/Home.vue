@@ -45,8 +45,8 @@ function toggleEventAction(id: string, forceClose = false): void {
         <div class="mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6 lg:px-8">
             <!-- menu -->
             <div
-                class="flex w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:w-[30%] sm:rounded-lg sm:p-8">
-                <div class="w-full rounded bg-red-200 px-4 py-2">Add</div>
+                class="flex w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:w-[30%] sm:rounded-lg sm:p-8 h-fit">
+                <div class="w-full rounded bg-red-200 px-4 py-2">Events</div>
 
                 <div class="w-full rounded bg-red-200 px-4 py-2">Settings</div>
             </div>
