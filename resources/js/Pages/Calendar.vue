@@ -7,12 +7,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { reactive, onMounted, computed } from 'vue';
 import { OnClickOutside } from '@vueuse/components';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Event } from '@/types/index';
 
-type Props = { events: Record<string, unknown>[] };
-type States = { modal: { visible: boolean; currentEvent: Record<string, unknown> | null } };
+type Props = { events: Event[] };
+type States = { modal: { visible: boolean; currentEvent: Event | null } };
 
 const props = defineProps<Props>();
 const states = reactive<States>({
@@ -60,7 +61,7 @@ const calendarOptions = reactive<CalendarOptions>({
     initialView: 'dayGridMonth',
     lazyFetching: false,
     // events: props.events, // fetch here
-    initialEvents: props.events,
+    initialEvents: props.events as unknown as EventInput[],
     eventClick: function (info) {
         // prettier-ignore
         states.modal.currentEvent = props.events.find((event) => event.id === parseInt(info.event.id))!;
@@ -82,7 +83,6 @@ function closeModal(): void {
 
 <template>
     <OnClickOutside
-        v-if="states.modal.currentEvent"
         :options="{ ignore: ['.ignore-outside-click'] }"
         @trigger="closeModal">
         <Dialog

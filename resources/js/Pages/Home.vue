@@ -5,14 +5,15 @@ import { Icon } from '@iconify/vue';
 import { Head, router } from '@inertiajs/vue3';
 import { OnClickOutside } from '@vueuse/components';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Event } from '@/types/index';
 
-type Props = { events: Record<string, any>[] };
-type States = { menu: { currentEvent: Record<string, any> | null; open: boolean } };
+type Props = { events: Event[] };
+type States = { menu: { currentEvent: Event | null; open: boolean } };
 
 const props = defineProps<Props>();
 const states = reactive<States>({
     menu: {
-        currentEvent: {},
+        currentEvent: null,
         open: false,
     },
 });
@@ -33,7 +34,7 @@ function formatDate(date: string | Date): string {
     return dayjs(date).format('MM/DD/YYYY h:mm:s A');
 }
 
-function toggleEventAction(id: string, forceClose = false): void {
+function toggleEventAction(id: number, forceClose = false): void {
     if (forceClose === true) {
         states.menu.open = false;
         states.menu.currentEvent = null;
@@ -43,7 +44,7 @@ function toggleEventAction(id: string, forceClose = false): void {
     states.menu.open = !states.menu.open;
 
     if (states.menu.open) {
-        states.menu.currentEvent = props.events.find((event) => event.id === parseInt(id))!;
+        states.menu.currentEvent = props.events.find((event) => event.id === id)!;
     } else {
         states.menu.currentEvent = null;
     }
