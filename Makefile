@@ -50,12 +50,15 @@ db:
 
 restart:
 	git pull
+	rm -rf ./vendor
+	rm -rf ./node_modules
 	composer install
 	npm install
 	rm -rf storage/app/public/*
 	rm database/database.sqlite
 	touch database/database.sqlite
 	php artisan migrate:refresh --seed
+	npm run dev
 
 refresh-db:
 	rm -rf storage/app/public/*
