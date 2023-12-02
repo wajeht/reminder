@@ -20,7 +20,7 @@ const props = defineProps<{
 
         <SecondaryButton
             v-else
-            class="w-full"
+            class="w-full border-[0.5px] border-gray-200"
             @click="router.get(props.to)">
             {{ props.label }}
         </SecondaryButton>
