@@ -18,6 +18,8 @@ deploy:
 	./deploy.sh
 
 install:
+	rm -rf ./vendor
+	rm -rf ./node_modules
 	composer install
 	npm install
 
