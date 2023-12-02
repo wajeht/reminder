@@ -10,7 +10,9 @@ import Dialog from 'primevue/dialog';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useToast } from 'primevue/usetoast';
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
+import SidebarMenuButton from '@/Components/SidebarMenuButton.vue';
+import { onMounted } from 'vue';
 
 type Props = { events: Event[] };
 type States = {
@@ -19,6 +21,11 @@ type States = {
 };
 
 const props = defineProps<Props>();
+
+onMounted(() => {
+    console.log(route().current());
+});
+
 const states = reactive<States>({
     menu: {
         currentEvent: null,
@@ -32,6 +39,12 @@ const states = reactive<States>({
 });
 
 const toast = useToast();
+
+const computedMenuLinks = computed(() => {
+    return {
+        admin: '/admin',
+    };
+});
 
 function viewEvent(id: number): void {
     router.visit(route('calendar', { id }));
@@ -135,13 +148,21 @@ function closeConfirmDeletionModal(): void {
             <!-- menu -->
             <div
                 class="sticky top-4 hidden h-fit w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[30%] sm:rounded-lg sm:p-8">
-                <div class="w-full rounded bg-red-200 px-4 py-2">Admin</div>
+                <SidebarMenuButton
+                    to="admin"
+                    label="Admin" />
 
-                <div class="w-full rounded bg-red-200 px-4 py-2">Events</div>
+                <SidebarMenuButton
+                    to="home"
+                    label="Home" />
 
-                <div class="w-full rounded bg-red-200 px-4 py-2">Calendar</div>
+                <SidebarMenuButton
+                    to="calendar"
+                    label="Calendar" />
 
-                <div class="w-full rounded bg-red-200 px-4 py-2">Settings</div>
+                <SidebarMenuButton
+                    to="settings"
+                    label="Settings" />
             </div>
 
             <!-- card column-->
@@ -159,7 +180,7 @@ function closeConfirmDeletionModal(): void {
                             <div class="max-w-[50px]">
                                 <img
                                     class="rounded-md"
-                                    :src="`storage/${event!.logo_url}`! as string"
+                                    :src="`storage/${event!.logo_url}`"
                                     alt="logo_url" />
                             </div>
                         </div>
