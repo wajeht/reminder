@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { reactive } from 'vue';
 import { Icon } from '@iconify/vue';
 import { Head, router } from '@inertiajs/vue3';
 import { OnClickOutside } from '@vueuse/components';
@@ -11,6 +10,7 @@ import Dialog from 'primevue/dialog';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useToast } from 'primevue/usetoast';
+import { reactive } from 'vue';
 
 type Props = { events: Event[] };
 type States = {
@@ -130,11 +130,16 @@ function closeConfirmDeletionModal(): void {
     <Head title="Home" />
 
     <AuthenticatedLayout>
-        <div class="mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6 lg:px-8">
+        <div
+            class="lg:px-8bg-red-200 mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6">
             <!-- menu -->
             <div
-                class="flex h-fit w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:w-[30%] sm:rounded-lg sm:p-8">
+                class="sticky top-4 hidden h-fit w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[30%] sm:rounded-lg sm:p-8">
+                <div class="w-full rounded bg-red-200 px-4 py-2">Admin</div>
+
                 <div class="w-full rounded bg-red-200 px-4 py-2">Events</div>
+
+                <div class="w-full rounded bg-red-200 px-4 py-2">Calendar</div>
 
                 <div class="w-full rounded bg-red-200 px-4 py-2">Settings</div>
             </div>
