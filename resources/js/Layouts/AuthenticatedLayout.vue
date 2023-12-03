@@ -262,6 +262,7 @@ async function logout(): Promise<void> {
 
                     <div class="flex w-full flex-col gap-2">
                         <SidebarMenuButton
+                            v-if="$page.props.auth.user.is_admin"
                             href
                             :active="route().current('admin')"
                             to="admin"
