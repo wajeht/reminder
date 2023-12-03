@@ -1,3 +1,13 @@
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+* {
+    scrollbar-width: none;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
