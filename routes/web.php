@@ -19,12 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PublicRouteController::class, 'index'])->name('app.index');
-Route::get('/about', [PublicRouteController::class, 'about'])->name('app.about');
-Route::get('/terms', [PublicRouteController::class, 'terms'])->name('app.terms');
-Route::get('/healthz', [PublicRouteController::class, 'healthz'])->name('app.healthz');
-Route::get('/privacy', [PublicRouteController::class, 'privacy'])->name('app.privacy');
-Route::get('/contact', [PublicRouteController::class, 'contact'])->name('app.contact');
+Route::get('/', [PublicRouteController::class, 'index'])->name('public.index');
+Route::get('/about', [PublicRouteController::class, 'about'])->name('public.about');
+Route::get('/terms', [PublicRouteController::class, 'terms'])->name('public.terms');
+Route::get('/healthz', [PublicRouteController::class, 'healthz'])->name('public.healthz');
+Route::get('/privacy', [PublicRouteController::class, 'privacy'])->name('public.privacy');
+Route::get('/contact', [PublicRouteController::class, 'contact'])->name('public.contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -132,13 +132,13 @@ const submit = () => {
                         <span class="text-sm text-gray-600 dark:text-gray-400"
                             >Signing up signifies that you have read and agree to the
                             <Link
-                                :href="route('app.terms')"
+                                :href="route('public.terms')"
                                 class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
                                 Terms of Service</Link
                             >
                             and our
                             <Link
-                                :href="route('app.privacy')"
+                                :href="route('public.privacy')"
                                 class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800">
                                 Privacy Policy</Link
                             >.</span

@@ -7,14 +7,14 @@ import NavLink from '@/Components/NavLink.vue';
         <div class="mx-auto flex max-w-3xl justify-between">
             <div class="flex items-center justify-center gap-4">
                 <NavLink
-                    :href="route('app.index')"
-                    :active="route().current('app.index')">
+                    :href="route('public.index')"
+                    :active="route().current('public.index')">
                     Home
                 </NavLink>
 
                 <NavLink
-                    :href="route('app.privacy')"
-                    :active="route().current('app.privacy')">
+                    :href="route('public.privacy')"
+                    :active="route().current('public.privacy')">
                     Privacy
                 </NavLink>
             </div>

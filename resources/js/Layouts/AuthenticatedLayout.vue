@@ -3,12 +3,27 @@ import { ref } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import ThemeToggle from '@/Components/ThemeToggle.vue';
 import Toast from 'primevue/toast';
 import SidebarMenuButton from '@/Components/SidebarMenuButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
+import axios from 'axios';
 
 const showingNavigationDropdown = ref(false);
+
+const loggingOut = ref(false);
+
+async function logout(): Promise<void> {
+    try {
+        loggingOut.value = true;
+        await axios.post(route('logout'));
+        loggingOut.value = true;
+        router.get(route('public.index'));
+    } catch (_error) {
+        console.log(_error);
+    }
+}
 </script>
 
 <template>
@@ -205,37 +220,50 @@ const showingNavigationDropdown = ref(false);
             <main
                 class="lg:px-8bg-red-200 mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6">
                 <!-- menu -->
+
                 <div
-                    class="sticky top-4 hidden h-fit w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[30%] sm:rounded-lg sm:p-8">
-                    <SidebarMenuButton
-                        :active="route().current('admin')"
-                        to="admin"
-                        label="Admin" />
+                    class="sticky top-4 hidden h-fit w-full flex-col gap-6 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[30%] sm:rounded-lg sm:p-8">
+                    <div class="flex w-full flex-col gap-2">
+                        <SidebarMenuButton
+                            :active="route().current('home')"
+                            to="home"
+                            label="Home" />
 
-                    <SidebarMenuButton
-                        :active="route().current('home')"
-                        to="home"
-                        label="Home" />
+                        <SidebarMenuButton
+                            :active="route().current('events')"
+                            to="events"
+                            label="Events" />
 
-                    <SidebarMenuButton
-                        :active="route().current('events')"
-                        to="events"
-                        label="Events" />
+                        <SidebarMenuButton
+                            :active="route().current('calendar')"
+                            to="calendar"
+                            label="Calendar" />
 
-                    <SidebarMenuButton
-                        :active="route().current('calendar')"
-                        to="calendar"
-                        label="Calendar" />
+                        <SidebarMenuButton
+                            :active="route().current('profile.edit')"
+                            to="profile"
+                            label="Profile" />
 
-                    <SidebarMenuButton
-                        :active="route().current('profile.edit')"
-                        to="profile"
-                        label="Profile" />
+                        <SidebarMenuButton
+                            :active="route().current('settings')"
+                            to="settings"
+                            label="Settings" />
+                    </div>
 
-                    <SidebarMenuButton
-                        :active="route().current('settings')"
-                        to="settings"
-                        label="Settings" />
+                    <div class="flex w-full flex-col gap-2">
+                        <SidebarMenuButton
+                            href
+                            :active="route().current('admin')"
+                            to="admin"
+                            label="Admin" />
+
+                        <DangerButton
+                            :class="{ 'opacity-25': loggingOut }"
+                            :disabled="loggingOut"
+                            @click="logout">
+                            Log Out
+                        </DangerButton>
+                    </div>
                 </div>
 
                 <!-- column -->
