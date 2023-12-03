@@ -14,7 +14,7 @@ class EventController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $this->authorize('view');
+        $this->authorize('viewAny');
 
         return response()->json([
             'message' => 'ok',
@@ -34,6 +34,8 @@ class EventController extends Controller
 
     public function create(Request $request): JsonResponse
     {
+        $this->authorize('create', Event::class);
+
         $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
