@@ -183,32 +183,34 @@ function closeConfirmDeletionModal(): void {
             <!-- events header -->
             <div
                 class="sticky top-0 z-20 bg-gray-100 dark:bg-gray-900"
-                :class="{ '-mx-3 z-20 px-3': states.scrolling }">
+                :class="{ 'z-20 -mx-3 px-3': states.scrolling }">
                 <div
-                    :class="{ 'my-4 z-20': states.scrolling }"
+                    :class="{ 'z-20 my-4': states.scrolling }"
                     class="bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
                     <div class="flex max-h-[33px] gap-4">
+                        <!-- clear selected events -->
                         <PrimaryButton
-                            @click="() => (states.selectedEvents = [])"
                             v-if="states.selectedEvents.length > 1"
+                            style="padding-left: 6px !important; padding-right: 6px !important"
+                            @click="() => (states.selectedEvents = [])"
                             ><Icon
                                 icon="bi:x"
                                 class="text-xl"
                         /></PrimaryButton>
 
                         <!-- search input -->
-                        <div class="w-full h-fit relative">
+                        <div class="relative h-fit w-full">
                             <TextInput
                                 id="text"
                                 v-model="states.search.modelValue"
                                 placeholder="Search..."
                                 type="text"
-                                class="w-full max-h-[33px]" />
+                                class="max-h-[33px] w-full" />
 
                             <button
-                                @click="() => (states.search.modelValue = '')"
                                 v-if="states.search.modelValue.length"
-                                class="absolute right-0 top-0 bottom-0 mr-4">
+                                class="absolute inset-y-0 right-0 mr-4"
+                                @click="() => (states.search.modelValue = '')">
                                 <Icon icon="bi:x" />
                             </button>
                         </div>
@@ -235,7 +237,8 @@ function closeConfirmDeletionModal(): void {
                     </div>
                 </div>
             </div>
-            <!-- events -->
+
+            <!-- if there are events -->
             <template v-if="computedEvents.length">
                 <div
                     v-for="(event, idx) in computedEvents"
@@ -255,10 +258,13 @@ function closeConfirmDeletionModal(): void {
                         </div>
                     </div>
 
+                    <!-- left -->
                     <div class="flex-1">
                         <div class="flex h-full flex-col justify-between gap-1">
+                            <!-- title -->
                             <span class="font-semibold">{{ event.title }}</span>
 
+                            <!-- description -->
                             <div class="flex flex-col gap-2">
                                 <span
                                     v-if="event.description"
@@ -266,6 +272,7 @@ function closeConfirmDeletionModal(): void {
                                     >{{ event.description }}</span
                                 >
 
+                                <!-- bottom -->
                                 <div class="flex items-center gap-2">
                                     <div class="flex items-center gap-1 text-xs text-gray-500">
                                         <Icon icon="heroicons:calendar-days" />
@@ -287,6 +294,7 @@ function closeConfirmDeletionModal(): void {
                         </div>
                     </div>
 
+                    <!-- center -->
                     <div class="flex-none text-right">
                         <div class="flex h-full flex-col justify-between gap-1">
                             <div class="flex items-center justify-end gap-1">
@@ -304,7 +312,9 @@ function closeConfirmDeletionModal(): void {
                         </div>
                     </div>
 
+                    <!-- right -->
                     <div class="relative flex-none">
+                        <!-- 3 dots -->
                         <button
                             class="ignore-outside-click rounded-sm p-1 text-sm hover:bg-gray-100 hover:dark:bg-gray-700"
                             @click="toggleEventAction(event.id)">
@@ -313,6 +323,7 @@ function closeConfirmDeletionModal(): void {
                                 class="items-start text-lg font-semibold text-gray-900 dark:text-gray-100" />
                         </button>
 
+                        <!-- menu list -->
                         <OnClickOutside
                             :options="{ ignore: ['.ignore-outside-click'] }"
                             @trigger="toggleEventAction(event.id, true)">

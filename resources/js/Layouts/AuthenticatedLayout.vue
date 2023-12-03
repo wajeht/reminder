@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
+import { Icon } from '@iconify/vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link, router } from '@inertiajs/vue3';
@@ -220,34 +221,43 @@ async function logout(): Promise<void> {
             <main
                 class="lg:px-8bg-red-200 mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6">
                 <!-- menu -->
-
                 <div
-                    class="sticky top-4 hidden h-fit w-full flex-col gap-6 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[30%] sm:rounded-lg sm:p-8">
+                    class="sticky top-4 hidden h-fit w-full flex-col gap-6 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[25%] sm:rounded-lg sm:p-8">
                     <div class="flex w-full flex-col gap-2">
                         <SidebarMenuButton
                             :active="route().current('home')"
                             to="home"
-                            label="Home" />
+                            label="Home">
+                            <Icon icon="bi:house-fill" />
+                        </SidebarMenuButton>
 
                         <SidebarMenuButton
                             :active="route().current('events')"
                             to="events"
-                            label="Events" />
+                            label="Events">
+                            <Icon icon="bi:bell-fill" />
+                        </SidebarMenuButton>
 
                         <SidebarMenuButton
                             :active="route().current('calendar')"
                             to="calendar"
-                            label="Calendar" />
+                            label="Calendar">
+                            <Icon icon="bi:calendar-fill" />
+                        </SidebarMenuButton>
 
                         <SidebarMenuButton
                             :active="route().current('profile.edit')"
                             to="profile"
-                            label="Profile" />
+                            label="Profile">
+                            <Icon icon="bi:person-fill" />
+                        </SidebarMenuButton>
 
                         <SidebarMenuButton
                             :active="route().current('settings')"
                             to="settings"
-                            label="Settings" />
+                            label="Settings">
+                            <Icon icon="bi:gear-fill" />
+                        </SidebarMenuButton>
                     </div>
 
                     <div class="flex w-full flex-col gap-2">
@@ -255,7 +265,9 @@ async function logout(): Promise<void> {
                             href
                             :active="route().current('admin')"
                             to="admin"
-                            label="Admin" />
+                            label="Admin">
+                            <Icon icon="bi:shield-shaded" />
+                        </SidebarMenuButton>
 
                         <DangerButton
                             :class="{ 'opacity-25': loggingOut }"
@@ -267,7 +279,7 @@ async function logout(): Promise<void> {
                 </div>
 
                 <!-- column -->
-                <div class="flex w-full flex-col gap-4 sm:w-[70%]">
+                <div class="flex w-full flex-col gap-4 sm:w-[75%]">
                     <slot />
                 </div>
             </main>

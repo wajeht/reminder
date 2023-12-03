@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { router } from '@inertiajs/vue3';
@@ -30,14 +31,32 @@ function go(): void {
             v-if="props.active"
             class="w-full"
             @click="go">
-            {{ props.label }}
+            <div class="flex w-full items-center justify-between text-right">
+                <div class="flex gap-3">
+                    <slot />
+                    {{ props.label }}
+                </div>
+
+                <Icon
+                    icon="bi:chevron-right"
+                    class="text-gray-400" />
+            </div>
         </PrimaryButton>
 
         <SecondaryButton
             v-else
             class="w-full border-[0.5px] border-gray-200"
             @click="go">
-            {{ props.label }}
+            <div class="flex w-full items-center justify-between text-right">
+                <div class="flex gap-3">
+                    <slot />
+                    {{ props.label }}
+                </div>
+
+                <Icon
+                    icon="bi:chevron-right"
+                    class="text-gray-300" />
+            </div>
         </SecondaryButton>
     </span>
 </template>
