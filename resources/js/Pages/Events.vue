@@ -2,17 +2,17 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { Icon } from '@iconify/vue';
-import { Head, router } from '@inertiajs/vue3';
-import { OnClickOutside } from '@vueuse/components';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Event } from '@/types/index';
 import Dialog from 'primevue/dialog';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useToast } from 'primevue/usetoast';
-import TextInput from '@/Components/TextInput.vue';
+import { Event } from '@/types/index';
 import { reactive, computed } from 'vue';
+import { useToast } from 'primevue/usetoast';
+import { Head, router } from '@inertiajs/vue3';
+import TextInput from '@/Components/TextInput.vue';
+import { OnClickOutside } from '@vueuse/components';
 import DangerButton from '@/Components/DangerButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 type Props = { events: Event[] };
 type States = {
@@ -170,12 +170,21 @@ function closeConfirmDeletionModal(): void {
             <div
                 class="sticky top-4 z-20 bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
                 <div class="flex max-h-[33px] gap-4">
-                    <TextInput
-                        id="text"
-                        v-model="states.search.modelValue"
-                        placeholder="Search..."
-                        type="text"
-                        class="w-full" />
+                    <div class="w-full h-fit relative">
+                        <TextInput
+                            id="text"
+                            v-model="states.search.modelValue"
+                            placeholder="Search..."
+                            type="text"
+                            class="w-full max-h-[33px]" />
+
+                        <button
+                            @click="() => (states.search.modelValue = '')"
+                            v-if="states.search.modelValue.length"
+                            class="absolute right-0 top-0 bottom-0 mr-4">
+                            <Icon icon="bi:x" />
+                        </button>
+                    </div>
 
                     <div class="inline-flex w-fit gap-2">
                         <PrimaryButton>Add</PrimaryButton>
