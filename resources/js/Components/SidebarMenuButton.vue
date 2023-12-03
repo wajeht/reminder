@@ -8,7 +8,7 @@ const props = withDefaults(
         to: string;
         active: boolean;
         label: string;
-        href: boolean;
+        href?: boolean;
     }>(),
     {
         href: false,
