@@ -18,7 +18,7 @@ type Props = { events: Event[] };
 type States = {
     events: Event[];
     scrolling: boolean;
-    selectedEvents: number[];
+    selected: { events: number[]; loading: boolean };
     menu: { currentEvent: Event | null; open: boolean };
     modal: { loading: boolean; visible: boolean; eventId: number | null };
     search: { modelValue: string };
@@ -27,7 +27,10 @@ type States = {
 const props = defineProps<Props>();
 
 const states = reactive<States>({
-    selectedEvents: [],
+    selected: {
+        events: [],
+        loading: false,
+    },
     events: props.events,
     scrolling: false,
     menu: {
@@ -54,19 +57,29 @@ const computedEvents = computed(() => {
 });
 
 const computedSelectedEventsClass = (id: number) => {
-    if (states.selectedEvents.includes(id)) {
+    if (states.selected.events.includes(id)) {
         const border = 'outline outline-[1px] outline-gray-400 dark:outline-gray-500';
         return `bg-gray-50 dark:bg-gray-700 ${border}`;
     }
     return 'bg-white dark:bg-gray-800';
 };
 
+/**
+ *
+ * to have the search bar sticky with some my-4
+ *
+ */
 document.addEventListener('scroll', () => {
     if (window.scrollY >= 100) {
         states.scrolling = true;
     }
 });
 
+/**
+ *
+ * to have the search bar sticky with some my-4
+ *
+ */
 document.addEventListener('scroll', () => {
     if (window.scrollY <= 100) {
         states.scrolling = false;
@@ -85,7 +98,6 @@ async function deleteEvent(id: number): Promise<void> {
     try {
         states.modal.loading = true;
         await axios.delete(`/api/v1/events/${id}`);
-        // router.reload({ only: ['events'] });
         states.events = states.events.filter((event) => event.id !== id);
         closeConfirmDeletionModal();
         states.modal.eventId = -1;
@@ -107,7 +119,7 @@ async function deleteEvent(id: number): Promise<void> {
 
 async function deleteAllEvents(): Promise<void> {
     try {
-        const deletePromises = states.selectedEvents.map(async function (id) {
+        const deletePromises = states.selected.events.map(async function (id) {
             await axios.delete(`/api/v1/events/${id}`);
         });
 
@@ -121,8 +133,8 @@ async function deleteAllEvents(): Promise<void> {
             }
         }
 
-        states.events = states.events.filter((event) => !states.selectedEvents.includes(event.id));
-        states.selectedEvents = [];
+        states.events = states.events.filter((event) => !states.selected.events.includes(event.id));
+        states.selected.events = [];
 
         if (deletionErrors) {
             toast.add({
@@ -169,10 +181,10 @@ function toggleEventAction(id: number, forceClose = false): void {
 }
 
 function selectEvent(id: number): void {
-    if (states.selectedEvents.includes(id)) {
-        states.selectedEvents = states.selectedEvents.filter((sid) => sid !== id);
+    if (states.selected.events.includes(id)) {
+        states.selected.events = states.selected.events.filter((sid) => sid !== id);
     } else {
-        states.selectedEvents.push(id);
+        states.selected.events.push(id);
     }
 }
 
@@ -233,9 +245,9 @@ function closeConfirmDeletionModal(): void {
                     <div class="flex max-h-[33px] gap-4">
                         <!-- clear selected events -->
                         <PrimaryButton
-                            v-if="states.selectedEvents.length > 1"
+                            v-if="states.selected.events.length > 1"
                             style="padding-left: 6px !important; padding-right: 6px !important"
-                            @click="() => (states.selectedEvents = [])"
+                            @click="() => (states.selected.events = [])"
                             ><Icon
                                 icon="bi:x"
                                 class="text-xl"
@@ -265,11 +277,11 @@ function closeConfirmDeletionModal(): void {
                             <PrimaryButton>Filters</PrimaryButton>
 
                             <div
-                                v-if="states.selectedEvents.length"
+                                v-if="states.selected.events.length > 1"
                                 class="relative">
                                 <div
                                     class="dark:gray-200 absolute -right-[2px] -top-[2px] flex h-3 w-3 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white p-2 text-xs shadow-md dark:text-gray-800">
-                                    {{ states.selectedEvents.length }}
+                                    {{ states.selected.events.length }}
                                 </div>
 
                                 <DangerButton
@@ -361,7 +373,7 @@ function closeConfirmDeletionModal(): void {
                     <div class="relative flex-none">
                         <!-- 3 dots -->
                         <button
-                            class="ignore-outside-click rounded-sm p-1 text-sm hover:bg-gray-100 hover:dark:bg-gray-700"
+                            class="ignore-outside-click rounded-sm p-1 text-sm hover:bg-gray-100 hover:dark:bg-gray-800"
                             @click="toggleEventAction(event.id)">
                             <Icon
                                 icon="heroicons:ellipsis-vertical-20-solid"
