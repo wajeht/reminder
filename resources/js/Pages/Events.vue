@@ -1,56 +1,49 @@
 <script setup lang="ts">
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { Icon } from '@iconify/vue';
 import Dialog from 'primevue/dialog';
 import { Event } from '@/types/index';
 import { reactive, computed } from 'vue';
+import axios, { AxiosError } from 'axios';
 import { useToast } from 'primevue/usetoast';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import { OnClickOutside } from '@vueuse/components';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 type Props = { events: Event[] };
+
 type States = {
-    events: Event[];
     scrolling: boolean;
+    search: { modelValue: string };
     selected: { events: number[]; loading: boolean };
     menu: { currentEvent: Event | null; open: boolean };
     modal: { loading: boolean; visible: boolean; eventId: number | null };
-    search: { modelValue: string };
+    data: { events: Event[]; event: Event; loading: boolean; add: boolean; error: any };
 };
 
 const props = defineProps<Props>();
 
 const states = reactive<States>({
-    selected: {
-        events: [],
-        loading: false,
-    },
-    events: props.events,
     scrolling: false,
-    menu: {
-        currentEvent: null,
-        open: false,
-    },
-    modal: {
-        loading: false,
-        visible: false,
-        eventId: null,
-    },
-    search: {
-        modelValue: '',
-    },
+    search: { modelValue: '' },
+    menu: { currentEvent: null, open: false },
+    selected: { events: [], loading: false },
+    modal: { loading: false, visible: false, eventId: null },
+    data: { events: props.events, event: {} as Event, loading: false, add: false, error: {} },
 });
+
+const page = usePage();
 
 const toast = useToast();
 
 const computedEvents = computed(() => {
-    return states.events.filter((event) => {
+    return states.data.events.filter((event) => {
         const searchContent = event.title + ' ' + event.description;
         return searchContent.toLowerCase().includes(states.search.modelValue.toLowerCase());
     });
@@ -98,7 +91,7 @@ async function deleteEvent(id: number): Promise<void> {
     try {
         states.modal.loading = true;
         await axios.delete(`/api/v1/events/${id}`);
-        states.events = states.events.filter((event) => event.id !== id);
+        states.data.events = states.data.events.filter((event) => event.id !== id);
         closeConfirmDeletionModal();
         states.modal.eventId = -1;
         toast.add({
@@ -133,7 +126,10 @@ async function deleteAllEvents(): Promise<void> {
             }
         }
 
-        states.events = states.events.filter((event) => !states.selected.events.includes(event.id));
+        states.data.events = states.data.events.filter(
+            (event) => !states.selected.events.includes(event.id),
+        );
+
         states.selected.events = [];
 
         if (deletionErrors) {
@@ -155,6 +151,39 @@ async function deleteAllEvents(): Promise<void> {
             detail: 'Oops, something went wrong!',
             life: 3000,
         });
+    } finally {
+        //
+    }
+}
+
+async function createEvent(): Promise<void> {
+    try {
+        const { data } = await axios.post('/api/v1/events', {
+            ...states.data.event,
+            user_id: page.props.auth.user.id,
+        });
+        states.data.events.push(data.data[0]);
+        states.data.add = false;
+        toast.add({
+            severity: 'success',
+            detail: 'Success!',
+            life: 3000,
+        });
+    } catch (error) {
+        if (error instanceof AxiosError && error.response?.status == 422) {
+            states.data.error = error.response?.data?.errors;
+            toast.add({
+                severity: 'error',
+                detail: error.response?.data?.message,
+                life: 3000,
+            });
+        } else {
+            toast.add({
+                severity: 'error',
+                detail: 'Oops, something went wrong!',
+                life: 3000,
+            });
+        }
     } finally {
         //
     }
@@ -202,6 +231,128 @@ function closeConfirmDeletionModal(): void {
 <template>
     <Head title="Events" />
 
+    <!-- add modal -->
+    <OnClickOutside
+        :options="{ ignore: ['.ignore-outside-click'] }"
+        @trigger="() => (states.data.add = false)">
+        <Dialog
+            v-model:visible="states.data.add"
+            class="ignore-outside-click"
+            modal
+            header="Add"
+            :style="{ width: 'calc(100vw - 75%)' }"
+            :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+            <div class="flex flex-col gap-6">
+                <!-- title -->
+                <div>
+                    <InputLabel
+                        for="title"
+                        value="Title" />
+
+                    <TextInput
+                        id="title"
+                        v-model="states.data.event.title"
+                        type="text"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="title" />
+
+                    <InputError
+                        v-if="states.data.error?.title"
+                        class="mt-2"
+                        :message="states.data.error?.title[0]" />
+                </div>
+
+                <!-- description -->
+                <div>
+                    <InputLabel
+                        for="description"
+                        value="Description" />
+
+                    <TextInput
+                        id="description"
+                        v-model="states.data.event.description"
+                        type="text"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="description" />
+                </div>
+
+                <!-- start date -->
+                <div>
+                    <InputLabel
+                        for="start_date"
+                        value="Start Date" />
+
+                    <TextInput
+                        id="start_date"
+                        v-model="states.data.event.start_date"
+                        type="date"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="start_date" />
+
+                    <InputError
+                        v-if="states.data.error.start_date"
+                        class="mt-2"
+                        :message="states.data.error?.start_date[0]" />
+                </div>
+
+                <!-- start date -->
+                <div>
+                    <InputLabel
+                        for="end_date"
+                        value="End Date" />
+
+                    <TextInput
+                        id="end_date"
+                        v-model="states.data.event.end_date"
+                        type="date"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="end_date" />
+                </div>
+
+                <!-- color  -->
+                <div>
+                    <InputLabel
+                        for="color"
+                        value="Color" />
+
+                    <TextInput
+                        id="color"
+                        v-model="states.data.event.color"
+                        type="color"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="color" />
+                </div>
+            </div>
+
+            <template #footer>
+                <div class="flex gap-2">
+                    <SecondaryButton
+                        :disabled="states.data.loading"
+                        @click="() => (states.data.add = false)">
+                        Cancel
+                    </SecondaryButton>
+
+                    <PrimaryButton
+                        :disabled="states.data.loading"
+                        @click="createEvent">
+                        Add
+                    </PrimaryButton>
+                </div>
+            </template>
+        </Dialog>
+    </OnClickOutside>
+
+    <!-- delete confirmation modal -->
     <OnClickOutside
         :options="{ ignore: ['.ignore-outside-click'] }"
         @trigger="closeConfirmDeletionModal">
@@ -272,7 +423,9 @@ function closeConfirmDeletionModal(): void {
 
                         <!-- buttons -->
                         <div class="inline-flex w-fit gap-2">
-                            <PrimaryButton>Add</PrimaryButton>
+                            <PrimaryButton @click="() => (states.data.add = true)"
+                                >Add</PrimaryButton
+                            >
 
                             <PrimaryButton>Filters</PrimaryButton>
 

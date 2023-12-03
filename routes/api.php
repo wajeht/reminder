@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth.custom')->group(function () {
     Route::prefix('/v1')->group(function () {
         Route::get('/events', [EventController::class, 'index'])->name('api.v1.events.index');
+        Route::post('/events', [EventController::class, 'create'])->name('api.v1.events.create');
         Route::get('/events/{event}', [EventController::class, 'show'])->name('api.v1.events.show')->whereNumber('id');
         Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('api.v1.events.destroy')->whereNumber('id');
     });

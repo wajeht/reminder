@@ -25,12 +25,12 @@ class EventFactory extends Factory
 
         $pub_file = database_path('data/pub.jpg');
 
-        if (!File::exists($pub_file)) {
+        if (! File::exists($pub_file)) {
             dd('pub file does not exist');
         }
 
-        $new_pub_file_name = Str::uuid() . '.jpg';
-        $new_pub_file_path = storage_path('app/public/' . $new_pub_file_name);
+        $new_pub_file_name = Str::uuid().'.jpg';
+        $new_pub_file_path = storage_path('app/public/'.$new_pub_file_name);
 
         File::copy($pub_file, $new_pub_file_path);
 
