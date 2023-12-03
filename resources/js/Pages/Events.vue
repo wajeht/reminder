@@ -105,6 +105,49 @@ async function deleteEvent(id: number): Promise<void> {
     }
 }
 
+async function deleteAllEvents(): Promise<void> {
+    try {
+        const deletePromises = states.selectedEvents.map(async function (id) {
+            await axios.delete(`/api/v1/events/${id}`);
+        });
+
+        const results = await Promise.allSettled(deletePromises);
+
+        let deletionErrors = false;
+
+        for (const result of results) {
+            if (result.status === 'rejected') {
+                deletionErrors = true;
+            }
+        }
+
+        states.events = states.events.filter((event) => !states.selectedEvents.includes(event.id));
+        states.selectedEvents = [];
+
+        if (deletionErrors) {
+            toast.add({
+                severity: 'warn',
+                detail: 'Some events could not be deleted.',
+                life: 3000,
+            });
+        } else {
+            toast.add({
+                severity: 'success',
+                detail: 'All selected events deleted successfully!',
+                life: 3000,
+            });
+        }
+    } catch (error) {
+        toast.add({
+            severity: 'error',
+            detail: 'Oops, something went wrong!',
+            life: 3000,
+        });
+    } finally {
+        //
+    }
+}
+
 function formatDate(date: string | Date): string {
     return dayjs(date).format('MM/DD/YYYY h:mm:s A');
 }
@@ -145,6 +188,8 @@ function closeConfirmDeletionModal(): void {
 </script>
 
 <template>
+    <Head title="Events" />
+
     <OnClickOutside
         :options="{ ignore: ['.ignore-outside-click'] }"
         @trigger="closeConfirmDeletionModal">
@@ -175,8 +220,6 @@ function closeConfirmDeletionModal(): void {
             </template>
         </Dialog>
     </OnClickOutside>
-
-    <Head title="Event" />
 
     <AuthenticatedLayout>
         <div class="flex flex-col gap-4">
@@ -229,7 +272,9 @@ function closeConfirmDeletionModal(): void {
                                     {{ states.selectedEvents.length }}
                                 </div>
 
-                                <DangerButton style="text-wrap: nowrap !important"
+                                <DangerButton
+                                    @click="deleteAllEvents"
+                                    style="text-wrap: nowrap !important"
                                     >Delete All</DangerButton
                                 >
                             </div>
