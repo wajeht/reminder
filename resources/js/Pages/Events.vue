@@ -51,6 +51,14 @@ const computedEvents = computed(() => {
     });
 });
 
+const computedSelectedEventsClass = (id: number) => {
+    if (states.selectedEvents.includes(id)) {
+        const border = 'outline outline-[1px] outline-gray-800 dark:outline-gray-500';
+        return `bg-gray-50 dark:bg-gray-700 ${border}`;
+    }
+    return 'bg-white dark:bg-gray-800';
+};
+
 function viewEvent(id: number): void {
     router.visit(route('calendar', { id }));
 }
@@ -196,7 +204,8 @@ function closeConfirmDeletionModal(): void {
                     v-for="(event, idx) in computedEvents"
                     :key="idx"
                     :style="event.color ? `border-left: 4px solid ${event.color}` : ''"
-                    class="flex gap-4 bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8"
+                    :class="[computedSelectedEventsClass(event.id)]"
+                    class="flex gap-4 p-4 text-gray-900 shadow hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700 sm:rounded-lg sm:p-8"
                     @click="selectEvent(event.id)">
                     <div
                         v-if="event.logo_url"
