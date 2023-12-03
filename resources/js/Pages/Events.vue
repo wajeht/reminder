@@ -53,7 +53,7 @@ const computedEvents = computed(() => {
 
 const computedSelectedEventsClass = (id: number) => {
     if (states.selectedEvents.includes(id)) {
-        const border = 'outline outline-[1px] outline-gray-800 dark:outline-gray-500';
+        const border = 'outline outline-[1px] outline-gray-400 dark:outline-gray-500';
         return `bg-gray-50 dark:bg-gray-700 ${border}`;
     }
     return 'bg-white dark:bg-gray-800';
@@ -168,7 +168,7 @@ function closeConfirmDeletionModal(): void {
         <div class="flex flex-col gap-4">
             <!-- events header -->
             <div
-                class="sticky top-4 z-50 bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
+                class="sticky top-4 z-20 bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
                 <div class="flex max-h-[33px] gap-4">
                     <TextInput
                         id="text"
