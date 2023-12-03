@@ -2,13 +2,13 @@
 import dayjs from 'dayjs';
 import { Icon } from '@iconify/vue';
 import Dialog from 'primevue/dialog';
-import axios, { AxiosError } from 'axios';
+import { Event } from '@/types/index';
 import { reactive, computed } from 'vue';
+import axios, { AxiosError } from 'axios';
 import { useToast } from 'primevue/usetoast';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import { OnClickOutside } from '@vueuse/components';
-import { Event, RecurringType } from '@/types/index';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import DangerButton from '@/Components/DangerButton.vue';
@@ -37,6 +37,8 @@ const states = reactive<States>({
     modal: { loading: false, visible: false, eventId: null },
     data: { events: props.events, event: {} as Event, loading: false, add: false, error: {} },
 });
+
+const page = usePage();
 
 const toast = useToast();
 
@@ -156,8 +158,16 @@ async function deleteAllEvents(): Promise<void> {
 
 async function createEvent(): Promise<void> {
     try {
-        await axios.post('/api/v1/events', {
+        const { data } = await axios.post('/api/v1/events', {
             ...states.data.event,
+            user_id: page.props.auth.user.id,
+        });
+        states.data.events.push(data.data[0]);
+        states.data.add = false;
+        toast.add({
+            severity: 'success',
+            detail: 'Success!',
+            life: 3000,
         });
     } catch (error) {
         if (error instanceof AxiosError && error.response?.status == 422) {
