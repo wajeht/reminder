@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\AppController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicRouteController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,16 +19,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AppController::class, 'index'])->name('app.index');
-Route::get('/about', [AppController::class, 'about'])->name('app.about');
-Route::get('/terms', [AppController::class, 'terms'])->name('app.terms');
-Route::get('/healthz', [AppController::class, 'healthz'])->name('app.healthz');
-Route::get('/privacy', [AppController::class, 'privacy'])->name('app.privacy');
-Route::get('/contact', [AppController::class, 'contact'])->name('app.contact');
+Route::get('/', [PublicRouteController::class, 'index'])->name('app.index');
+Route::get('/about', [PublicRouteController::class, 'about'])->name('app.about');
+Route::get('/terms', [PublicRouteController::class, 'terms'])->name('app.terms');
+Route::get('/healthz', [PublicRouteController::class, 'healthz'])->name('app.healthz');
+Route::get('/privacy', [PublicRouteController::class, 'privacy'])->name('app.privacy');
+Route::get('/contact', [PublicRouteController::class, 'contact'])->name('app.contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/events', [EventController::class, 'index'])->name('events');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
 });
 
 Route::middleware('auth')->group(function () {

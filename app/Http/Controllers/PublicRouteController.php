@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 
-class AppController extends Controller
+class PublicRouteController extends Controller
 {
     public function index(Request $request): InertiaResponse
     {

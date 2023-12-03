@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import ThemeToggle from '@/Components/ThemeToggle.vue';
 import Toast from 'primevue/toast';
+import SidebarMenuButton from '@/Components/SidebarMenuButton.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -34,7 +34,7 @@ const showingNavigationDropdown = ref(false);
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     :href="route('home')"
                                     :active="route().current('home')">
@@ -53,7 +53,7 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('filament.admin.pages.dashboard')">
                                     Admin
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
@@ -88,6 +88,10 @@ const showingNavigationDropdown = ref(false);
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')">
                                             Profile
+                                        </DropdownLink>
+
+                                        <DropdownLink :href="route('settings')">
+                                            Settings
                                         </DropdownLink>
 
                                         <DropdownLink
@@ -153,6 +157,12 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink
+                            :href="route('events')"
+                            :active="route().current('events')">
+                            Events
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
                             :href="route('calendar')"
                             :active="route().current('calendar')">
                             Calendar
@@ -176,6 +186,10 @@ const showingNavigationDropdown = ref(false);
                                 Profile
                             </ResponsiveNavLink>
 
+                            <ResponsiveNavLink :href="route('settings')">
+                                Settings
+                            </ResponsiveNavLink>
+
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
@@ -188,8 +202,46 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Content -->
-            <main>
-                <slot />
+            <main
+                class="lg:px-8bg-red-200 mx-auto flex max-w-7xl flex-col gap-4 py-12 sm:flex-row sm:px-6">
+                <!-- menu -->
+                <div
+                    class="sticky top-4 hidden h-fit w-full flex-col gap-2 overflow-hidden bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:flex sm:w-[30%] sm:rounded-lg sm:p-8">
+                    <SidebarMenuButton
+                        :active="route().current('admin')"
+                        to="admin"
+                        label="Admin" />
+
+                    <SidebarMenuButton
+                        :active="route().current('home')"
+                        to="home"
+                        label="Home" />
+
+                    <SidebarMenuButton
+                        :active="route().current('events')"
+                        to="events"
+                        label="Events" />
+
+                    <SidebarMenuButton
+                        :active="route().current('calendar')"
+                        to="calendar"
+                        label="Calendar" />
+
+                    <SidebarMenuButton
+                        :active="route().current('profile.edit')"
+                        to="profile"
+                        label="Profile" />
+
+                    <SidebarMenuButton
+                        :active="route().current('settings')"
+                        to="settings"
+                        label="Settings" />
+                </div>
+
+                <!-- column -->
+                <div class="flex w-full flex-col gap-4 sm:w-[70%]">
+                    <slot />
+                </div>
             </main>
         </div>
 

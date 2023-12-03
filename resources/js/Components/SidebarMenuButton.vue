@@ -5,6 +5,7 @@ import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
     to: string;
+    active: boolean;
     label: string;
 }>();
 </script>
@@ -12,7 +13,7 @@ const props = defineProps<{
 <template>
     <span>
         <PrimaryButton
-            v-if="route().current() === to"
+            v-if="props.active"
             class="w-full"
             @click="router.get(props.to)">
             {{ props.label }}
