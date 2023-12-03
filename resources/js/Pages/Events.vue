@@ -11,7 +11,6 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useToast } from 'primevue/usetoast';
 import { reactive } from 'vue';
-import { onMounted } from 'vue';
 
 type Props = { events: Event[] };
 type States = {
@@ -20,10 +19,6 @@ type States = {
 };
 
 const props = defineProps<Props>();
-
-onMounted(() => {
-    console.log(route().current());
-});
 
 const states = reactive<States>({
     menu: {
