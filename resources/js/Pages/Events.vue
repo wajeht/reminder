@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { Icon } from '@iconify/vue';
 import Dialog from 'primevue/dialog';
-import { Event, RecurringType } from '@/types/index';
+import axios, { AxiosError } from 'axios';
 import { reactive, computed } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { Head, router } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import { OnClickOutside } from '@vueuse/components';
+import { Event, RecurringType } from '@/types/index';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import DangerButton from '@/Components/DangerButton.vue';
@@ -24,7 +24,7 @@ type States = {
     selected: { events: number[]; loading: boolean };
     menu: { currentEvent: Event | null; open: boolean };
     modal: { loading: boolean; visible: boolean; eventId: number | null };
-    data: { events: Event[]; event: Event; loading: boolean; add: boolean };
+    data: { events: Event[]; event: Event; loading: boolean; add: boolean; error: any };
 };
 
 const props = defineProps<Props>();
@@ -35,7 +35,7 @@ const states = reactive<States>({
     menu: { currentEvent: null, open: false },
     selected: { events: [], loading: false },
     modal: { loading: false, visible: false, eventId: null },
-    data: { events: props.events, event: {} as Event, loading: false, add: false },
+    data: { events: props.events, event: {} as Event, loading: false, add: false, error: {} },
 });
 
 const toast = useToast();
@@ -156,16 +156,24 @@ async function deleteAllEvents(): Promise<void> {
 
 async function createEvent(): Promise<void> {
     try {
-        axios.post('/api/v1/events', {
+        await axios.post('/api/v1/events', {
             ...states.data.event,
         });
     } catch (error) {
-        console.log(error);
-        toast.add({
-            severity: 'error',
-            detail: 'Oops, something went wrong!',
-            life: 3000,
-        });
+        if (error instanceof AxiosError && error.response?.status == 422) {
+            states.data.error = error.response?.data?.errors;
+            toast.add({
+                severity: 'error',
+                detail: error.response?.data?.message,
+                life: 3000,
+            });
+        } else {
+            toast.add({
+                severity: 'error',
+                detail: 'Oops, something went wrong!',
+                life: 3000,
+            });
+        }
     } finally {
         //
     }
@@ -239,6 +247,11 @@ function closeConfirmDeletionModal(): void {
                         required
                         autofocus
                         autocomplete="title" />
+
+                    <InputError
+                        v-if="states.data.error?.title"
+                        class="mt-2"
+                        :message="states.data.error?.title[0]" />
                 </div>
 
                 <!-- description -->
@@ -271,6 +284,11 @@ function closeConfirmDeletionModal(): void {
                         required
                         autofocus
                         autocomplete="start_date" />
+
+                    <InputError
+                        v-if="states.data.error.start_date"
+                        class="mt-2"
+                        :message="states.data.error?.start_date[0]" />
                 </div>
 
                 <!-- start date -->

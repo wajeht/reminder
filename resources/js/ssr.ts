@@ -29,7 +29,7 @@ createServer((page) =>
                     location: new URL(page.props.ziggy.location),
                 })
                 .use(PrimeVue, { pt: {} })
-                .use(ToastService)
+                .use(ToastService);
         },
         progress: {
             color: '#4e46dc',

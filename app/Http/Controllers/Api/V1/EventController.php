@@ -38,7 +38,7 @@ class EventController extends Controller
             'title' => 'required|string',
             'description' => 'nullable|string',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date|before_or_equal:start_date'
+            'end_date' => 'nullable|date|before_or_equal:start_date',
         ]);
 
         $event = Event::create([
