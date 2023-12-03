@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nextTick } from 'vue';
 import Dialog from 'primevue/dialog';
+import { Event } from '@/types/index';
 import { Head } from '@inertiajs/vue3';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,7 +11,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Event } from '@/types/index';
 
 type Props = { events: Event[] };
 type States = { modal: { visible: boolean; currentEvent: Event | null } };
@@ -61,6 +61,7 @@ const calendarOptions = reactive<CalendarOptions>({
     initialView: 'dayGridMonth',
     lazyFetching: false,
     // events: props.events, // fetch here
+    contentHeight: 'auto',
     initialEvents: props.events as unknown as EventInput[],
     eventClick: function (info) {
         // prettier-ignore
