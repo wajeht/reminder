@@ -277,18 +277,21 @@ function closeConfirmDeletionModal(): void {
                             <PrimaryButton>Filters</PrimaryButton>
 
                             <div
-                                v-if="states.selected.events.length > 1"
+                                v-if="states.selected.events.length"
                                 class="relative">
                                 <div
+                                    v-if="states.selected.events.length > 1"
                                     class="dark:gray-200 absolute -right-[2px] -top-[2px] flex h-3 w-3 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white p-2 text-xs shadow-md dark:text-gray-800">
                                     {{ states.selected.events.length }}
                                 </div>
 
                                 <DangerButton
-                                    @click="deleteAllEvents"
                                     style="text-wrap: nowrap !important"
-                                    >Delete All</DangerButton
-                                >
+                                    @click="deleteAllEvents">
+                                    <span v-if="states.selected.events.length > 1">Delete All</span>
+
+                                    <span v-else>Delete</span>
+                                </DangerButton>
                             </div>
                         </div>
                     </div>
