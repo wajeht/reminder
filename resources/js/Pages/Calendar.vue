@@ -72,7 +72,7 @@ const calendarOptions = reactive<CalendarOptions>({
 
 function closeModal(): void {
     states.modal.visible = false;
-    states.modal.currentEvent = null;
+    states.modal.currentEvent = {} as Event;
 
     if (computedEventId.value) {
         const params = new URLSearchParams(window.location.search);
