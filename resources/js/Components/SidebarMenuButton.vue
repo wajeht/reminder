@@ -32,7 +32,7 @@ function go(): void {
             class="w-full"
             @click="go">
             <div class="flex w-full items-center justify-between text-right">
-                <div class="flex gap-3">
+                <div class="flex gap-3 items-center">
                     <slot />
                     {{ props.label }}
                 </div>
@@ -48,7 +48,7 @@ function go(): void {
             class="w-full border-[0.5px] border-gray-200"
             @click="go">
             <div class="flex w-full items-center justify-between text-right">
-                <div class="flex gap-3">
+                <div class="flex gap-3 items-center">
                     <slot />
                     {{ props.label }}
                 </div>

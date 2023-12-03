@@ -273,7 +273,16 @@ async function logout(): Promise<void> {
                             :class="{ 'opacity-25': loggingOut }"
                             :disabled="loggingOut"
                             @click="logout">
-                            Log Out
+                            <div class="flex w-full items-center justify-between text-right">
+                                <div class="flex gap-3 items-center">
+                                    <Icon icon="bi:arrow-left-square-fill" />
+                                    <span>Log Out</span>
+                                </div>
+
+                                <Icon
+                                    icon="bi:chevron-right"
+                                    class="text-gray-400" />
+                            </div>
                         </DangerButton>
                     </div>
                 </div>
