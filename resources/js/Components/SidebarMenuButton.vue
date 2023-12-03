@@ -20,7 +20,9 @@ function go(): void {
     if (props.href) {
         window.location.href = props.to;
     } else {
-        router.get(props.to);
+        router.visit(props.to, {
+            preserveScroll: true,
+        });
     }
 }
 </script>
@@ -32,7 +34,7 @@ function go(): void {
             class="w-full"
             @click="go">
             <div class="flex w-full items-center justify-between text-right">
-                <div class="flex gap-3 items-center">
+                <div class="flex items-center gap-3">
                     <slot />
                     {{ props.label }}
                 </div>
@@ -48,7 +50,7 @@ function go(): void {
             class="w-full border-[0.5px] border-gray-200"
             @click="go">
             <div class="flex w-full items-center justify-between text-right">
-                <div class="flex gap-3 items-center">
+                <div class="flex items-center gap-3">
                     <slot />
                     {{ props.label }}
                 </div>

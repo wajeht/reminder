@@ -274,8 +274,9 @@ async function logout(): Promise<void> {
                             :disabled="loggingOut"
                             @click="logout">
                             <div class="flex w-full items-center justify-between text-right">
-                                <div class="flex gap-3 items-center">
+                                <div class="flex items-center gap-3">
                                     <Icon icon="bi:arrow-left-square-fill" />
+
                                     <span>Log Out</span>
                                 </div>
 
