@@ -4,6 +4,8 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import ToastService from 'primevue/toastservice';
+import PrimeVue from 'primevue/config';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -25,7 +27,9 @@ createServer((page) =>
                     ...page.props.ziggy,
                     // @ts-expect-error
                     location: new URL(page.props.ziggy.location),
-                });
+                })
+                .use(PrimeVue, { pt: {} })
+                .use(ToastService)
         },
         progress: {
             color: '#4e46dc',
