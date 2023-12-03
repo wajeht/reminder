@@ -17,6 +17,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 type Props = { events: Event[] };
 type States = {
     events: Event[];
+    scrolling: boolean;
     selectedEvents: number[];
     menu: { currentEvent: Event | null; open: boolean };
     modal: { loading: boolean; visible: boolean; eventId: number | null };
@@ -28,6 +29,7 @@ const props = defineProps<Props>();
 const states = reactive<States>({
     selectedEvents: [],
     events: props.events,
+    scrolling: false,
     menu: {
         currentEvent: null,
         open: false,
@@ -58,6 +60,18 @@ const computedSelectedEventsClass = (id: number) => {
     }
     return 'bg-white dark:bg-gray-800';
 };
+
+document.addEventListener('scroll', () => {
+    if (window.scrollY >= 100) {
+        states.scrolling = true;
+    }
+});
+
+document.addEventListener('scroll', () => {
+    if (window.scrollY <= 100) {
+        states.scrolling = false;
+    }
+});
 
 function viewEvent(id: number): void {
     router.visit(route('calendar', { id }));
@@ -168,45 +182,59 @@ function closeConfirmDeletionModal(): void {
         <div class="flex flex-col gap-4">
             <!-- events header -->
             <div
-                class="sticky top-4 z-20 bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
-                <div class="flex max-h-[33px] gap-4">
-                    <div class="w-full h-fit relative">
-                        <TextInput
-                            id="text"
-                            v-model="states.search.modelValue"
-                            placeholder="Search..."
-                            type="text"
-                            class="w-full max-h-[33px]" />
+                class="sticky top-0 z-20 bg-gray-100 dark:bg-gray-900"
+                :class="{ '-mx-3 z-20 px-3': states.scrolling }">
+                <div
+                    :class="{ 'my-4 z-20': states.scrolling }"
+                    class="bg-white p-4 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 sm:rounded-lg sm:p-8">
+                    <div class="flex max-h-[33px] gap-4">
+                        <PrimaryButton
+                            @click="() => (states.selectedEvents = [])"
+                            v-if="states.selectedEvents.length > 1"
+                            ><Icon
+                                icon="bi:x"
+                                class="text-xl"
+                        /></PrimaryButton>
 
-                        <button
-                            @click="() => (states.search.modelValue = '')"
-                            v-if="states.search.modelValue.length"
-                            class="absolute right-0 top-0 bottom-0 mr-4">
-                            <Icon icon="bi:x" />
-                        </button>
-                    </div>
+                        <!-- search input -->
+                        <div class="w-full h-fit relative">
+                            <TextInput
+                                id="text"
+                                v-model="states.search.modelValue"
+                                placeholder="Search..."
+                                type="text"
+                                class="w-full max-h-[33px]" />
 
-                    <div class="inline-flex w-fit gap-2">
-                        <PrimaryButton>Add</PrimaryButton>
+                            <button
+                                @click="() => (states.search.modelValue = '')"
+                                v-if="states.search.modelValue.length"
+                                class="absolute right-0 top-0 bottom-0 mr-4">
+                                <Icon icon="bi:x" />
+                            </button>
+                        </div>
 
-                        <PrimaryButton>Filters</PrimaryButton>
+                        <!-- buttons -->
+                        <div class="inline-flex w-fit gap-2">
+                            <PrimaryButton>Add</PrimaryButton>
 
-                        <div
-                            v-if="states.selectedEvents.length"
-                            class="relative">
+                            <PrimaryButton>Filters</PrimaryButton>
+
                             <div
-                                class="dark:gray-200 absolute -right-[2px] -top-[2px] flex h-3 w-3 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white p-2 text-xs shadow-md dark:text-gray-800">
-                                {{ states.selectedEvents.length }}
-                            </div>
+                                v-if="states.selectedEvents.length"
+                                class="relative">
+                                <div
+                                    class="dark:gray-200 absolute -right-[2px] -top-[2px] flex h-3 w-3 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white p-2 text-xs shadow-md dark:text-gray-800">
+                                    {{ states.selectedEvents.length }}
+                                </div>
 
-                            <DangerButton style="text-wrap: nowrap !important"
-                                >Delete All</DangerButton
-                            >
+                                <DangerButton style="text-wrap: nowrap !important"
+                                    >Delete All</DangerButton
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- events -->
             <template v-if="computedEvents.length">
                 <div
