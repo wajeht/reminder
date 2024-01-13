@@ -23,6 +23,13 @@ install:
 	composer install
 	npm install
 
+commit:
+	composer test
+	composer format
+	git add -A
+	./commit.sh
+	git push --no-verify
+
 format:
 	npm run format
 	./vendor/bin/pint
