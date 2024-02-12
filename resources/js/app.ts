@@ -2,6 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 import 'primevue/resources/themes/lara-light-green/theme.css';
 
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import { createApp, h, DefineComponent } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -22,6 +23,7 @@ createInertiaApp({
         // eslint-disable-next-line vue/component-api-style
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(autoAnimatePlugin)
             .use(ZiggyVue, Ziggy)
             .use(PrimeVue, { pt: {} })
             .use(ToastService)

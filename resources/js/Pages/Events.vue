@@ -452,10 +452,13 @@ function closeConfirmDeletionModal(): void {
             </div>
 
             <!-- if there are events -->
-            <template v-if="computedEvents.length">
+            <div
+                v-if="computedEvents.length"
+                v-auto-animate
+                class="flex flex-col gap-4">
                 <div
-                    v-for="(event, idx) in computedEvents"
-                    :key="idx"
+                    v-for="event in computedEvents"
+                    :key="event.id"
                     :style="event.color ? `border-left: 4px solid ${event.color}` : ''"
                     :class="[computedSelectedEventsClass(event.id)]"
                     class="flex gap-4 p-4 text-gray-900 shadow hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-gray-700 sm:rounded-lg sm:p-8"
@@ -566,7 +569,7 @@ function closeConfirmDeletionModal(): void {
                         </OnClickOutside>
                     </div>
                 </div>
-            </template>
+            </div>
 
             <!-- if empty -->
             <div

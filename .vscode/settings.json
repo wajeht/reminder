@@ -7,6 +7,7 @@
         "commitlint",
         "daygrid",
         "fakerphp",
+        "formkit",
         "fullcalendar",
         "guzzlehttp",
         "healthz",
