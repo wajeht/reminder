@@ -112,6 +112,7 @@ async function deleteEvent(id: number): Promise<void> {
 
 async function deleteAllEvents(): Promise<void> {
     try {
+        states.modal.loading = true;
         const deletePromises = states.selected.events.map(async function (id) {
             await axios.delete(`/api/v1/events/${id}`);
         });
@@ -139,6 +140,7 @@ async function deleteAllEvents(): Promise<void> {
                 life: 3000,
             });
         } else {
+            closeConfirmDeletionModal();
             toast.add({
                 severity: 'success',
                 detail: 'All selected events deleted successfully!',
@@ -152,7 +154,7 @@ async function deleteAllEvents(): Promise<void> {
             life: 3000,
         });
     } finally {
-        //
+        states.modal.loading = false;
     }
 }
 
@@ -217,9 +219,9 @@ function selectEvent(id: number): void {
     }
 }
 
-function openConfirmDeletionModal(id: number): void {
+function openConfirmDeletionModal(id?: number): void {
     states.modal.visible = true;
-    states.modal.eventId = id;
+    if (id) states.modal.eventId = id;
 }
 
 function closeConfirmDeletionModal(): void {
@@ -364,7 +366,17 @@ function closeConfirmDeletionModal(): void {
             header="Warning"
             :style="{ width: 'calc(100vw - 75%)' }"
             :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-            <span class="text-sm">Are you sure you want to delete this event?</span>
+            <span
+                v-if="states.selected.events.length"
+                class="text-sm">
+                Are you sure you want to delete all selected event?
+            </span>
+
+            <span
+                v-else
+                class="text-sm">
+                Are you sure you want to delete this event?
+            </span>
 
             <template #footer>
                 <div class="flex gap-2">
@@ -376,7 +388,11 @@ function closeConfirmDeletionModal(): void {
 
                     <PrimaryButton
                         :disabled="states.modal.loading"
-                        @click="deleteEvent(states.modal.eventId)">
+                        @click="
+                            states.selected.events.length
+                                ? deleteAllEvents()
+                                : deleteEvent(states.modal.eventId)
+                        ">
                         Delete
                     </PrimaryButton>
                 </div>
@@ -440,7 +456,7 @@ function closeConfirmDeletionModal(): void {
 
                                 <DangerButton
                                     style="text-wrap: nowrap !important"
-                                    @click="deleteAllEvents">
+                                    @click="openConfirmDeletionModal">
                                     <span v-if="states.selected.events.length > 1">Delete All</span>
 
                                     <span v-else>Delete</span>
