@@ -33,8 +33,8 @@ export interface Event {
     id: number;
     title: string;
     description: string;
-    start_date: Date;
-    end_date: Date;
+    start_date: Date | string;
+    end_date: Date | string;
     recurrence_type: RecurringType;
     recurrence_interval: number | null;
     logo_url: string;
