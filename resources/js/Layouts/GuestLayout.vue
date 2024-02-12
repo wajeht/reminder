@@ -8,7 +8,7 @@ import Header from '@/Components/Header.vue';
         class="relative flex min-h-screen w-full flex-col items-center justify-between bg-gray-100 dark:bg-gray-900">
         <Header />
 
-        <div class="mt-6 flex h-full w-full items-center justify-center overflow-hidden p-5">
+        <div class="mt-6 flex size-full items-center justify-center overflow-hidden p-5">
             <slot />
         </div>
 

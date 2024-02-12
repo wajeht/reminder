@@ -88,7 +88,7 @@ async function logout(): Promise<void> {
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg
-                                                    class="-me-0.5 ms-2 h-4 w-4"
+                                                    class="-me-0.5 ms-2 size-4"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor">
@@ -129,7 +129,7 @@ async function logout(): Promise<void> {
                                 class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"
                                 @click="showingNavigationDropdown = !showingNavigationDropdown">
                                 <svg
-                                    class="h-6 w-6"
+                                    class="size-6"
                                     stroke="currentColor"
                                     fill="none"
                                     viewBox="0 0 24 24">

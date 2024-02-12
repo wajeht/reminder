@@ -434,7 +434,7 @@ function closeConfirmDeletionModal(): void {
                                 class="relative">
                                 <div
                                     v-if="states.selected.events.length > 1"
-                                    class="dark:gray-200 absolute -right-[2px] -top-[2px] flex h-3 w-3 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white p-2 text-xs shadow-md dark:text-gray-800">
+                                    class="dark:gray-200 absolute -right-[2px] -top-[2px] flex size-3 items-center justify-center rounded-full border-[1px] border-gray-200 bg-white p-2 text-xs shadow-md dark:text-gray-800">
                                     {{ states.selected.events.length }}
                                 </div>
 
@@ -543,7 +543,7 @@ function closeConfirmDeletionModal(): void {
                             <div
                                 v-if="states.menu.open && event.id === states.menu.currentEvent?.id"
                                 class="absolute right-0 z-10 mt-1 w-[192px] rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-700">
-                                <div class="flex h-full w-full flex-col">
+                                <div class="flex size-full flex-col">
                                     <button
                                         class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800"
                                         @click="editEvent(event.id)">
